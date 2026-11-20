@@ -1,0 +1,54 @@
+[
+  {
+    "source_id": "ollama-chat-api",
+    "title": "Generate a chat message",
+    "publisher": "Ollama",
+    "url": "https://docs.ollama.com/api/chat",
+    "source_type": "official API documentation",
+    "publication_or_revision_date": null,
+    "relevant_section": "Body format/stream/think/options; response metrics",
+    "establishes": "POST /api/chat accepts model/messages, JSON Schema format, streaming and thinking controls; response can report prompt/evaluation token counts and duration.",
+    "limitations": "Runtime options and thinking support vary by installed model; no response is guaranteed.",
+    "used_by": [
+      "generator.py",
+      "doctor",
+      "generation metrics"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "retrieval_receipt": {
+      "title": "Generate a chat message - Ollama",
+      "status_code": 200,
+      "scrape_id": "01a1f7e0-48e1-77a8-a1d4-38dd3b2bc814"
+    }
+  },
+  {
+    "source_id": "ollama-tags-api",
+    "title": "List models",
+    "publisher": "Ollama",
+    "url": "https://docs.ollama.com/api/tags",
+    "source_type": "official API documentation",
+    "publication_or_revision_date": null,
+    "relevant_section": "GET /api/tags response",
+    "establishes": "GET /api/tags lists available local models with names, digests, sizes and metadata.",
+    "limitations": "Installed listing establishes availability, not successful inference or hardware suitability.",
+    "used_by": [
+      "generator.py",
+      "doctor",
+      "generation metrics"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "retrieval_receipt": {
+      "title": "List models - Ollama",
+      "status_code": 200,
+      "scrape_id": "01a1f7e0-4918-7209-8b73-d7243ce41b73"
+    }
+  }
+]
