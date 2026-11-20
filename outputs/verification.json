@@ -1,0 +1,103 @@
+{
+  "status": "PASS_WITH_DOCUMENTED_EXPERIMENTAL_LIMITS",
+  "tests_executed": 81,
+  "reference_cases": 7,
+  "reference_fixtures": 23,
+  "reference_metamorphic_relations": 10,
+  "controlled_variants": 53,
+  "invalid_variants": 46,
+  "valid_equivalent_variants": 7,
+  "all_invalid_detected_by_B4": true,
+  "unresolved_equivalent_semantic_items": 3,
+  "real_generated_graphs_rechecked": 9,
+  "real_direct_qwen3_4b_requests": 7,
+  "real_direct_graph_valid": 0,
+  "hierarchy_status": "INVALID",
+  "judge_agreement": {
+    "eligible_items": 1,
+    "agree": 1,
+    "unknown_items": 1,
+    "ablation_confusion": {
+      "true_acceptance": 1,
+      "false_acceptance": 0,
+      "true_rejection": 0,
+      "false_rejection": 0,
+      "unknown": 1,
+      "unlabeled_items": 0
+    },
+    "basis": "Two all-items intake labels from independent executable expectations; no human semantic calibration.",
+    "all_items_ablation_metrics": {
+      "prompt_tokens": 3906,
+      "completion_tokens": 253,
+      "latency_ms": 148874.22711099862,
+      "actual_inference_calls": 2,
+      "cached_calls": 0
+    },
+    "selective_metrics": {
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "latency_ms": 300107.27564400074,
+      "actual_inference_calls": 1,
+      "cached_calls": 0
+    }
+  },
+  "source_entries": 19,
+  "unverified_source_ids": [
+    "WorkflowJudge"
+  ],
+  "oracle_integrity": {
+    "verdict": "PASS",
+    "changed_files": [],
+    "lock_sha256": "351a19604a4bbbdd278bcea0ac44f123d66089a0b873488c852d0ceaf801f74b"
+  },
+  "browser": {
+    "status": "PASS",
+    "file_url": "file:///home/ltp/Code/Graduation/Demo-Agent/outputs/report.html",
+    "offline": true,
+    "workflow_options": 69,
+    "keyword_failure_case": "approval-en--swapped_branches",
+    "actual_generated_example": "approval-en--direct-c15cf210-0",
+    "actual_issue_nodes": 8,
+    "approved_executed_nodes": 9,
+    "rejected_send_executed": false,
+    "mobile_dimensions": {
+      "viewport": 390,
+      "body": 390
+    },
+    "page_errors": [],
+    "remote_requests": []
+  },
+  "experiment_jobs_terminal": true,
+  "remaining_started_request_records": 0,
+  "artifact_sha256": {
+    "report.html": "10df0a48ea593a42ea7da16023fc678d2a57f6b7211500613639fc24a88a5f01",
+    "results.json": "ab2bb8996c2bc5a3e043b981e688b899954daf17f6b57286d84ed87b7a1aab38",
+    "summary.md": "5a3459e19bc8848d2a2cbc22a4ec0b38fc7a05cd30c2320345a587aff9ca692c",
+    "test-run.txt": "5fc9f59af961b4de674fe4c2ed9d6efc15a5e5e5be94b51856d6bff94911b9c3",
+    "browser-verification.json": "fec52d06992498ff361f8998bfce63de4ea3074f88b0e345d1c76c48cce52812"
+  },
+  "limits": [
+    "No broad Helpdesk or multilingual generalization claim.",
+    "No independently reviewed semantic/translation labels.",
+    "Default-model and selective-judge timeouts are preserved, not successful model outputs.",
+    "Complete hierarchy/multi-model orchestration verified by transport doubles; actual hierarchy stopped on invalid plan."
+  ],
+  "graph_svg_count": 69,
+  "removed_superseded_export_files": [
+    "approval-en--direct-0.svg",
+    "approval-en--direct-0.json",
+    "approval-vi--direct-0.svg",
+    "approval-vi--direct-0.json",
+    "damage-en--direct-0.svg",
+    "damage-en--direct-0.json",
+    "intake-en--direct-0.svg",
+    "intake-en--direct-0.json",
+    "order-en--direct-0.svg",
+    "order-en--direct-0.json",
+    "order-vi--direct-0.svg",
+    "order-vi--direct-0.json",
+    "routing-en--direct-0.svg",
+    "routing-en--direct-0.json"
+  ],
+  "relocation_note": "Workspace moved to repository root; 81 tests rerun and report regenerated. Browser verification is historical evidence from before relocation."
+}

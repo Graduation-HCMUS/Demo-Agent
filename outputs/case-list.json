@@ -1,0 +1,58 @@
+[
+  {
+    "case_id": "approval-en",
+    "language": "en",
+    "sop_id": "approval",
+    "source_ids": [
+      "N8N-triage"
+    ]
+  },
+  {
+    "case_id": "approval-vi",
+    "language": "vi",
+    "sop_id": "approval",
+    "source_ids": [
+      "N8N-triage"
+    ]
+  },
+  {
+    "case_id": "damage-en",
+    "language": "en",
+    "sop_id": "damage",
+    "source_ids": [
+      "ZD-examples"
+    ]
+  },
+  {
+    "case_id": "intake-en",
+    "language": "en",
+    "sop_id": "intake",
+    "source_ids": [
+      "N8N-routing"
+    ]
+  },
+  {
+    "case_id": "order-en",
+    "language": "en",
+    "sop_id": "order",
+    "source_ids": [
+      "ZD-examples"
+    ]
+  },
+  {
+    "case_id": "order-vi",
+    "language": "vi",
+    "sop_id": "order",
+    "source_ids": [
+      "ZD-examples"
+    ]
+  },
+  {
+    "case_id": "routing-en",
+    "language": "en",
+    "sop_id": "routing",
+    "source_ids": [
+      "N8N-routing"
+    ]
+  }
+]

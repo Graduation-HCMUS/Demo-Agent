@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "approval_workflow",
+  "name": "Human Approval for Customer Reply",
+  "nodes": [
+    {
+      "id": "input_in_scope",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "input_proposed_reply",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "input_approval_decision",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "condition_in_scope",
+      "type": "condition",
+      "config": {
+        "field": "in_scope",
+        "operator": "eq",
+        "value": "true"
+      }
+    },
+    {
+      "id": "custom_create_ticket",
+      "type": "custom",
+      "config": {
+        "operation": "create_ticket",
+        "args": {}
+      }
+    },
+    {
+      "id": "custom_draft_reply",
+      "type": "custom",
+      "config": {
+        "operation": "draft_reply",
+        "args": {
+          "text": {
+            "ref": "input_proposed_reply"
+          }
+        }
+      }
+    },
+    {
+      "id": "custom_request_approval",
+      "type": "custom",
+      "config": {
+        "operation": "request_approval",
+        "args": {
+          "ticket_created": "custom_create_ticket",
+          "draft": "custom_draft_reply",
+          "approval_decision": "input_approval_decision"
+        }
+      }
+    },
+    {
+      "id": "custom_send_reply",
+      "type": "custom",
+      "config": {
+        "operation": "send_reply",
+        "args": {
+          "text": {
+            "ref": "custom_draft_reply"
+          }
+        }
+      }
+    },
+    {
+      "id": "custom_route_to_resolved",
+      "type": "custom",
+      "config": {
+        "operation": "route",
+        "args": {
+          "group": "Resolved by AI"
+        }
+      }
+    },
+    {
+      "id": "custom_route_to_manual",
+      "type": "custom",
+      "config": {
+        "operation": "route",
+        "args": {
+          "group": "Manual Review"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "input_in_scope",
+      "target": "condition_in_scope",
+      "port": "next"
+    },
+    {
+      "source": "condition_in_scope",
+      "target": "custom_create_ticket",
+      "port": "next"
+    },
+    {
+      "source": "custom_create_ticket",
+      "target": "custom_draft_reply",
+      "port": "next"
+    },
+    {
+      "source": "custom_draft_reply",
+      "target": "custom_request_approval",
+      "port": "next"
+    },
+    {
+      "source": "custom_request_approval",
+      "target": "custom_send_reply",
+      "port": "next"
+    },
+    {
+      "source": "custom_send_reply",
+      "target": "custom_route_to_resolved",
+      "port": "next"
+    },
+    {
+      "source": "custom_request_approval",
+      "target": "custom_route_to_manual",
+      "port": "false"
+    }
+  ]
+}

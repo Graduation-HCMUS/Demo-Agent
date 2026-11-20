@@ -1,0 +1,12 @@
+{
+  "output": "/home/ltp/Code/Graduation/Demo-Agent/outputs/evaluations/intake-en.json",
+  "verdict": "PASS",
+  "methods": {
+    "B": "PASS",
+    "D": "PASS",
+    "E": "PASS",
+    "F": "PASS",
+    "C": "PASS",
+    "G": "UNKNOWN"
+  }
+}

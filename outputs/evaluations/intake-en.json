@@ -1,0 +1,1037 @@
+{
+  "case_id": "intake-en",
+  "input_kind": "reference demonstration",
+  "verdict": "PASS",
+  "results": {
+    "B": {
+      "method": "B",
+      "verdict": "PASS",
+      "evidence": [
+        {
+          "term": "ticket",
+          "matched": [
+            "ticket",
+            "ticket",
+            "create_ticket"
+          ],
+          "verdict": "PASS"
+        },
+        {
+          "term": "validation",
+          "matched": [
+            "validate",
+            "validate_fields"
+          ],
+          "verdict": "PASS"
+        }
+      ],
+      "elapsed_ms": 0.289107996650273,
+      "prompt_tokens": 0,
+      "completion_tokens": 0
+    },
+    "D": {
+      "method": "D",
+      "verdict": "PASS",
+      "evidence": [],
+      "elapsed_ms": 1.374617000692524,
+      "prompt_tokens": 0,
+      "completion_tokens": 0
+    },
+    "E": {
+      "method": "E",
+      "verdict": "PASS",
+      "evidence": [
+        {
+          "fixture_id": "complete",
+          "expected_state": {
+            "ticket_created": true
+          },
+          "expected_trace_constraints": {
+            "required_actions": [
+              "create_ticket"
+            ],
+            "action_order": [],
+            "branches": {}
+          },
+          "forbidden_effects": [
+            "request_info"
+          ],
+          "execution": {
+            "status": "OK",
+            "state": {
+              "email": "user@example.test",
+              "message": "help",
+              "effects": [
+                "create_ticket"
+              ],
+              "messages": [],
+              "valid": true,
+              "missing_fields": [],
+              "ticket_created": true
+            },
+            "trace": [
+              {
+                "step_index": 0,
+                "node_id": "in",
+                "node_type": "input",
+                "operation": "input",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "user@example.test",
+                  "message": "help",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "in",
+                  "target": "validate",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 1,
+                "node_id": "validate",
+                "node_type": "custom",
+                "operation": "validate_fields",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "user@example.test",
+                  "message": "help",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {
+                  "valid": true,
+                  "missing_fields": []
+                },
+                "selected_edge": {
+                  "source": "validate",
+                  "target": "valid",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 2,
+                "node_id": "valid",
+                "node_type": "condition",
+                "operation": "condition",
+                "condition": {
+                  "field": "valid",
+                  "operator": "eq",
+                  "value": true
+                },
+                "input_snapshot": {
+                  "email": "user@example.test",
+                  "message": "help",
+                  "effects": [],
+                  "messages": [],
+                  "valid": true,
+                  "missing_fields": []
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "valid",
+                  "target": "create",
+                  "port": "true"
+                },
+                "error": null
+              },
+              {
+                "step_index": 3,
+                "node_id": "create",
+                "node_type": "custom",
+                "operation": "create_ticket",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "user@example.test",
+                  "message": "help",
+                  "effects": [],
+                  "messages": [],
+                  "valid": true,
+                  "missing_fields": []
+                },
+                "state_changes": {
+                  "effects": [
+                    "create_ticket"
+                  ],
+                  "ticket_created": true
+                },
+                "selected_edge": {
+                  "source": "create",
+                  "target": "out",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 4,
+                "node_id": "out",
+                "node_type": "output",
+                "operation": "output",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "user@example.test",
+                  "message": "help",
+                  "effects": [
+                    "create_ticket"
+                  ],
+                  "messages": [],
+                  "valid": true,
+                  "missing_fields": [],
+                  "ticket_created": true
+                },
+                "state_changes": {},
+                "selected_edge": null,
+                "error": null
+              }
+            ],
+            "errors": []
+          },
+          "failures": [],
+          "verdict": "PASS"
+        },
+        {
+          "fixture_id": "missing",
+          "expected_state": {
+            "status": 400
+          },
+          "expected_trace_constraints": {
+            "required_actions": [
+              "request_info"
+            ],
+            "action_order": [],
+            "branches": {}
+          },
+          "forbidden_effects": [
+            "create_ticket"
+          ],
+          "execution": {
+            "status": "OK",
+            "state": {
+              "email": "",
+              "message": "help",
+              "effects": [
+                "request_info"
+              ],
+              "messages": [],
+              "valid": false,
+              "missing_fields": [
+                "email"
+              ],
+              "requested_fields": [
+                "email"
+              ],
+              "status": 400
+            },
+            "trace": [
+              {
+                "step_index": 0,
+                "node_id": "in",
+                "node_type": "input",
+                "operation": "input",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "",
+                  "message": "help",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "in",
+                  "target": "validate",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 1,
+                "node_id": "validate",
+                "node_type": "custom",
+                "operation": "validate_fields",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "",
+                  "message": "help",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {
+                  "valid": false,
+                  "missing_fields": [
+                    "email"
+                  ]
+                },
+                "selected_edge": {
+                  "source": "validate",
+                  "target": "valid",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 2,
+                "node_id": "valid",
+                "node_type": "condition",
+                "operation": "condition",
+                "condition": {
+                  "field": "valid",
+                  "operator": "eq",
+                  "value": true
+                },
+                "input_snapshot": {
+                  "email": "",
+                  "message": "help",
+                  "effects": [],
+                  "messages": [],
+                  "valid": false,
+                  "missing_fields": [
+                    "email"
+                  ]
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "valid",
+                  "target": "missing",
+                  "port": "false"
+                },
+                "error": null
+              },
+              {
+                "step_index": 3,
+                "node_id": "missing",
+                "node_type": "custom",
+                "operation": "request_info",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "",
+                  "message": "help",
+                  "effects": [],
+                  "messages": [],
+                  "valid": false,
+                  "missing_fields": [
+                    "email"
+                  ]
+                },
+                "state_changes": {
+                  "effects": [
+                    "request_info"
+                  ],
+                  "requested_fields": [
+                    "email"
+                  ],
+                  "status": 400
+                },
+                "selected_edge": {
+                  "source": "missing",
+                  "target": "out",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 4,
+                "node_id": "out",
+                "node_type": "output",
+                "operation": "output",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "",
+                  "message": "help",
+                  "effects": [
+                    "request_info"
+                  ],
+                  "messages": [],
+                  "valid": false,
+                  "missing_fields": [
+                    "email"
+                  ],
+                  "requested_fields": [
+                    "email"
+                  ],
+                  "status": 400
+                },
+                "state_changes": {},
+                "selected_edge": null,
+                "error": null
+              }
+            ],
+            "errors": []
+          },
+          "failures": [],
+          "verdict": "PASS"
+        }
+      ],
+      "elapsed_ms": 3.1341079993580934,
+      "prompt_tokens": 0,
+      "completion_tokens": 0
+    },
+    "F": {
+      "method": "F",
+      "verdict": "PASS",
+      "evidence": [
+        {
+          "relation_id": "email_added",
+          "source_ids": [
+            "N8N-routing"
+          ],
+          "changed_fields": {
+            "email": "other@example.test"
+          },
+          "base": {
+            "status": "OK",
+            "state": {
+              "email": "",
+              "message": "help",
+              "effects": [
+                "request_info"
+              ],
+              "messages": [],
+              "valid": false,
+              "missing_fields": [
+                "email"
+              ],
+              "requested_fields": [
+                "email"
+              ],
+              "status": 400
+            },
+            "trace": [
+              {
+                "step_index": 0,
+                "node_id": "in",
+                "node_type": "input",
+                "operation": "input",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "",
+                  "message": "help",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "in",
+                  "target": "validate",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 1,
+                "node_id": "validate",
+                "node_type": "custom",
+                "operation": "validate_fields",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "",
+                  "message": "help",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {
+                  "valid": false,
+                  "missing_fields": [
+                    "email"
+                  ]
+                },
+                "selected_edge": {
+                  "source": "validate",
+                  "target": "valid",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 2,
+                "node_id": "valid",
+                "node_type": "condition",
+                "operation": "condition",
+                "condition": {
+                  "field": "valid",
+                  "operator": "eq",
+                  "value": true
+                },
+                "input_snapshot": {
+                  "email": "",
+                  "message": "help",
+                  "effects": [],
+                  "messages": [],
+                  "valid": false,
+                  "missing_fields": [
+                    "email"
+                  ]
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "valid",
+                  "target": "missing",
+                  "port": "false"
+                },
+                "error": null
+              },
+              {
+                "step_index": 3,
+                "node_id": "missing",
+                "node_type": "custom",
+                "operation": "request_info",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "",
+                  "message": "help",
+                  "effects": [],
+                  "messages": [],
+                  "valid": false,
+                  "missing_fields": [
+                    "email"
+                  ]
+                },
+                "state_changes": {
+                  "effects": [
+                    "request_info"
+                  ],
+                  "requested_fields": [
+                    "email"
+                  ],
+                  "status": 400
+                },
+                "selected_edge": {
+                  "source": "missing",
+                  "target": "out",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 4,
+                "node_id": "out",
+                "node_type": "output",
+                "operation": "output",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "",
+                  "message": "help",
+                  "effects": [
+                    "request_info"
+                  ],
+                  "messages": [],
+                  "valid": false,
+                  "missing_fields": [
+                    "email"
+                  ],
+                  "requested_fields": [
+                    "email"
+                  ],
+                  "status": 400
+                },
+                "state_changes": {},
+                "selected_edge": null,
+                "error": null
+              }
+            ],
+            "errors": []
+          },
+          "changed": {
+            "status": "OK",
+            "state": {
+              "email": "other@example.test",
+              "message": "help",
+              "effects": [
+                "create_ticket"
+              ],
+              "messages": [],
+              "valid": true,
+              "missing_fields": [],
+              "ticket_created": true
+            },
+            "trace": [
+              {
+                "step_index": 0,
+                "node_id": "in",
+                "node_type": "input",
+                "operation": "input",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "other@example.test",
+                  "message": "help",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "in",
+                  "target": "validate",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 1,
+                "node_id": "validate",
+                "node_type": "custom",
+                "operation": "validate_fields",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "other@example.test",
+                  "message": "help",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {
+                  "valid": true,
+                  "missing_fields": []
+                },
+                "selected_edge": {
+                  "source": "validate",
+                  "target": "valid",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 2,
+                "node_id": "valid",
+                "node_type": "condition",
+                "operation": "condition",
+                "condition": {
+                  "field": "valid",
+                  "operator": "eq",
+                  "value": true
+                },
+                "input_snapshot": {
+                  "email": "other@example.test",
+                  "message": "help",
+                  "effects": [],
+                  "messages": [],
+                  "valid": true,
+                  "missing_fields": []
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "valid",
+                  "target": "create",
+                  "port": "true"
+                },
+                "error": null
+              },
+              {
+                "step_index": 3,
+                "node_id": "create",
+                "node_type": "custom",
+                "operation": "create_ticket",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "other@example.test",
+                  "message": "help",
+                  "effects": [],
+                  "messages": [],
+                  "valid": true,
+                  "missing_fields": []
+                },
+                "state_changes": {
+                  "effects": [
+                    "create_ticket"
+                  ],
+                  "ticket_created": true
+                },
+                "selected_edge": {
+                  "source": "create",
+                  "target": "out",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 4,
+                "node_id": "out",
+                "node_type": "output",
+                "operation": "output",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "other@example.test",
+                  "message": "help",
+                  "effects": [
+                    "create_ticket"
+                  ],
+                  "messages": [],
+                  "valid": true,
+                  "missing_fields": [],
+                  "ticket_created": true
+                },
+                "state_changes": {},
+                "selected_edge": null,
+                "error": null
+              }
+            ],
+            "errors": []
+          },
+          "expected_base": {
+            "status": 400
+          },
+          "expected_changed": {
+            "ticket_created": true
+          },
+          "failures": [],
+          "verdict": "PASS"
+        },
+        {
+          "relation_id": "message_added",
+          "source_ids": [
+            "N8N-routing"
+          ],
+          "changed_fields": {
+            "message": "details"
+          },
+          "base": {
+            "status": "OK",
+            "state": {
+              "email": "a@example.test",
+              "message": "",
+              "effects": [
+                "request_info"
+              ],
+              "messages": [],
+              "valid": false,
+              "missing_fields": [
+                "message"
+              ],
+              "requested_fields": [
+                "message"
+              ],
+              "status": 400
+            },
+            "trace": [
+              {
+                "step_index": 0,
+                "node_id": "in",
+                "node_type": "input",
+                "operation": "input",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "a@example.test",
+                  "message": "",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "in",
+                  "target": "validate",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 1,
+                "node_id": "validate",
+                "node_type": "custom",
+                "operation": "validate_fields",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "a@example.test",
+                  "message": "",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {
+                  "valid": false,
+                  "missing_fields": [
+                    "message"
+                  ]
+                },
+                "selected_edge": {
+                  "source": "validate",
+                  "target": "valid",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 2,
+                "node_id": "valid",
+                "node_type": "condition",
+                "operation": "condition",
+                "condition": {
+                  "field": "valid",
+                  "operator": "eq",
+                  "value": true
+                },
+                "input_snapshot": {
+                  "email": "a@example.test",
+                  "message": "",
+                  "effects": [],
+                  "messages": [],
+                  "valid": false,
+                  "missing_fields": [
+                    "message"
+                  ]
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "valid",
+                  "target": "missing",
+                  "port": "false"
+                },
+                "error": null
+              },
+              {
+                "step_index": 3,
+                "node_id": "missing",
+                "node_type": "custom",
+                "operation": "request_info",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "a@example.test",
+                  "message": "",
+                  "effects": [],
+                  "messages": [],
+                  "valid": false,
+                  "missing_fields": [
+                    "message"
+                  ]
+                },
+                "state_changes": {
+                  "effects": [
+                    "request_info"
+                  ],
+                  "requested_fields": [
+                    "message"
+                  ],
+                  "status": 400
+                },
+                "selected_edge": {
+                  "source": "missing",
+                  "target": "out",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 4,
+                "node_id": "out",
+                "node_type": "output",
+                "operation": "output",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "a@example.test",
+                  "message": "",
+                  "effects": [
+                    "request_info"
+                  ],
+                  "messages": [],
+                  "valid": false,
+                  "missing_fields": [
+                    "message"
+                  ],
+                  "requested_fields": [
+                    "message"
+                  ],
+                  "status": 400
+                },
+                "state_changes": {},
+                "selected_edge": null,
+                "error": null
+              }
+            ],
+            "errors": []
+          },
+          "changed": {
+            "status": "OK",
+            "state": {
+              "email": "a@example.test",
+              "message": "details",
+              "effects": [
+                "create_ticket"
+              ],
+              "messages": [],
+              "valid": true,
+              "missing_fields": [],
+              "ticket_created": true
+            },
+            "trace": [
+              {
+                "step_index": 0,
+                "node_id": "in",
+                "node_type": "input",
+                "operation": "input",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "a@example.test",
+                  "message": "details",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "in",
+                  "target": "validate",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 1,
+                "node_id": "validate",
+                "node_type": "custom",
+                "operation": "validate_fields",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "a@example.test",
+                  "message": "details",
+                  "effects": [],
+                  "messages": []
+                },
+                "state_changes": {
+                  "valid": true,
+                  "missing_fields": []
+                },
+                "selected_edge": {
+                  "source": "validate",
+                  "target": "valid",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 2,
+                "node_id": "valid",
+                "node_type": "condition",
+                "operation": "condition",
+                "condition": {
+                  "field": "valid",
+                  "operator": "eq",
+                  "value": true
+                },
+                "input_snapshot": {
+                  "email": "a@example.test",
+                  "message": "details",
+                  "effects": [],
+                  "messages": [],
+                  "valid": true,
+                  "missing_fields": []
+                },
+                "state_changes": {},
+                "selected_edge": {
+                  "source": "valid",
+                  "target": "create",
+                  "port": "true"
+                },
+                "error": null
+              },
+              {
+                "step_index": 3,
+                "node_id": "create",
+                "node_type": "custom",
+                "operation": "create_ticket",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "a@example.test",
+                  "message": "details",
+                  "effects": [],
+                  "messages": [],
+                  "valid": true,
+                  "missing_fields": []
+                },
+                "state_changes": {
+                  "effects": [
+                    "create_ticket"
+                  ],
+                  "ticket_created": true
+                },
+                "selected_edge": {
+                  "source": "create",
+                  "target": "out",
+                  "port": "next"
+                },
+                "error": null
+              },
+              {
+                "step_index": 4,
+                "node_id": "out",
+                "node_type": "output",
+                "operation": "output",
+                "condition": null,
+                "input_snapshot": {
+                  "email": "a@example.test",
+                  "message": "details",
+                  "effects": [
+                    "create_ticket"
+                  ],
+                  "messages": [],
+                  "valid": true,
+                  "missing_fields": [],
+                  "ticket_created": true
+                },
+                "state_changes": {},
+                "selected_edge": null,
+                "error": null
+              }
+            ],
+            "errors": []
+          },
+          "expected_base": {
+            "status": 400
+          },
+          "expected_changed": {
+            "ticket_created": true
+          },
+          "failures": [],
+          "verdict": "PASS"
+        }
+      ],
+      "elapsed_ms": 5.716955001844326,
+      "prompt_tokens": 0,
+      "completion_tokens": 0
+    },
+    "C": {
+      "method": "C",
+      "verdict": "PASS",
+      "evidence": [
+        {
+          "requirement_id": "I1",
+          "description": "Reject incomplete intake and create only complete tickets",
+          "source_ids": [
+            "N8N-routing"
+          ],
+          "severity": "major",
+          "evaluation_method": "trace",
+          "expected_evidence": "Independent state/trace assertions across the named fixtures",
+          "operations": [
+            "validate_fields",
+            "create_ticket",
+            "request_info"
+          ],
+          "provenance": "SOURCE_ADAPTATION",
+          "verdict": "PASS",
+          "evidence": [
+            {
+              "fixture_id": "complete",
+              "verdict": "PASS",
+              "failures": []
+            },
+            {
+              "fixture_id": "missing",
+              "verdict": "PASS",
+              "failures": []
+            }
+          ]
+        }
+      ],
+      "elapsed_ms": 0.8432400027231779,
+      "prompt_tokens": 0,
+      "completion_tokens": 0
+    },
+    "G": {
+      "method": "G",
+      "status": "DISABLED",
+      "verdict": "UNKNOWN",
+      "evidence": [],
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 0
+    }
+  }
+}

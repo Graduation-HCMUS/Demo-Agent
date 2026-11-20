@@ -1,0 +1,6 @@
+direct ['INVALID_WORKFLOW'] {'prompt_tokens': 0, 'completion_tokens': 0, 'latency_ms': 4.4472160006989725, 'actual_inference_calls': 0, 'cached_calls': 1}
+hierarchical ['INVALID'] {'prompt_tokens': 1181, 'completion_tokens': 304, 'latency_ms': 77289.10291500142, 'actual_inference_calls': 1, 'cached_calls': 0}
+multi-candidate ['INVALID_WORKFLOW', 'INVALID_WORKFLOW'] {'prompt_tokens': 1347, 'completion_tokens': 319, 'latency_ms': 44820.95372800177, 'actual_inference_calls': 1, 'cached_calls': 1}
+judge-all reference RUN {'eligible_items': 1, 'agree': 1, 'basis': 'Independent deterministic fixture/checklist labels; semantic items lack independent human labels.'}
+judge-all swapped_branches RUN {'eligible_items': 0, 'agree': 0, 'basis': 'Independent deterministic fixture/checklist labels; semantic items lack independent human labels.'}
+judge-selective UNAVAILABLE_OR_INVALID UNKNOWN

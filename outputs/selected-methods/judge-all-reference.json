@@ -1,0 +1,244 @@
+{
+  "case_id": "intake-en",
+  "mutation_id": null,
+  "expected_valid": true,
+  "judge": {
+    "method": "G",
+    "status": "RUN",
+    "verdict": "PASS",
+    "evidence": [
+      {
+        "requirement_id": "I1",
+        "verdict": "PASS",
+        "votes": [
+          {
+            "requirement_id": "I1",
+            "verdict": "PASS",
+            "node_ids": [
+              "in",
+              "validate",
+              "valid",
+              "create",
+              "out"
+            ],
+            "edge_refs": [
+              "in:next:validate",
+              "validate:next:valid",
+              "valid:true:create",
+              "create:next:out"
+            ],
+            "trace_refs": [
+              "complete:0",
+              "complete:1",
+              "complete:2",
+              "complete:3",
+              "complete:4"
+            ],
+            "reason": "Complete intake with valid fields creates ticket without errors",
+            "uncertainty": 0,
+            "failure_category": "none"
+          }
+        ],
+        "deterministic_verdict": "PASS",
+        "effective_verdict": "PASS"
+      }
+    ],
+    "calls": [
+      {
+        "kind": "judge-all",
+        "model": "qwen3:4b",
+        "model_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "configuration": {
+          "model": "qwen3:4b",
+          "host": "http://127.0.0.1:11434",
+          "timeout": 300.0,
+          "num_predict": 2048,
+          "num_ctx": 8192,
+          "temperature": 0,
+          "seed": 17,
+          "retries": 0
+        },
+        "prompt_version": "genie-zero-shot-v2",
+        "prompt_hash": "99f9d7f5338a5723c5058b98d0d32587a17607a191f8ec3d24a00d793a27bf49",
+        "schema_hash": "6d92da658db769d3ef31c8e8be995088aad72db8428d78f2cbf2edf122774786",
+        "cached": false,
+        "prompt_tokens": 2194,
+        "completion_tokens": 144,
+        "latency_ms": 102457.96321200032,
+        "raw_response": "{\n  \"items\": [\n    {\n      \"requirement_id\": \"I1\",\n      \"verdict\": \"PASS\",\n      \"node_ids\": [\"in\", \"validate\", \"valid\", \"create\", \"out\"],\n      \"edge_refs\": [\"in:next:validate\", \"validate:next:valid\", \"valid:true:create\", \"create:next:out\"],\n      \"trace_refs\": [\"complete:0\", \"complete:1\", \"complete:2\", \"complete:3\", \"complete:4\"],\n      \"reason\": \"Complete intake with valid fields creates ticket without errors\",\n      \"uncertainty\": 0,\n      \"failure_category\": \"none\"\n    }\n  ]\n}",
+        "parsed": {
+          "items": [
+            {
+              "requirement_id": "I1",
+              "verdict": "PASS",
+              "node_ids": [
+                "in",
+                "validate",
+                "valid",
+                "create",
+                "out"
+              ],
+              "edge_refs": [
+                "in:next:validate",
+                "validate:next:valid",
+                "valid:true:create",
+                "create:next:out"
+              ],
+              "trace_refs": [
+                "complete:0",
+                "complete:1",
+                "complete:2",
+                "complete:3",
+                "complete:4"
+              ],
+              "reason": "Complete intake with valid fields creates ticket without errors",
+              "uncertainty": 0,
+              "failure_category": "none"
+            }
+          ]
+        },
+        "validation_errors": [],
+        "attempts": [
+          {
+            "attempt_index": 0,
+            "raw_response": "{\n  \"items\": [\n    {\n      \"requirement_id\": \"I1\",\n      \"verdict\": \"PASS\",\n      \"node_ids\": [\"in\", \"validate\", \"valid\", \"create\", \"out\"],\n      \"edge_refs\": [\"in:next:validate\", \"validate:next:valid\", \"valid:true:create\", \"create:next:out\"],\n      \"trace_refs\": [\"complete:0\", \"complete:1\", \"complete:2\", \"complete:3\", \"complete:4\"],\n      \"reason\": \"Complete intake with valid fields creates ticket without errors\",\n      \"uncertainty\": 0,\n      \"failure_category\": \"none\"\n    }\n  ]\n}",
+            "parsed": {
+              "items": [
+                {
+                  "requirement_id": "I1",
+                  "verdict": "PASS",
+                  "node_ids": [
+                    "in",
+                    "validate",
+                    "valid",
+                    "create",
+                    "out"
+                  ],
+                  "edge_refs": [
+                    "in:next:validate",
+                    "validate:next:valid",
+                    "valid:true:create",
+                    "create:next:out"
+                  ],
+                  "trace_refs": [
+                    "complete:0",
+                    "complete:1",
+                    "complete:2",
+                    "complete:3",
+                    "complete:4"
+                  ],
+                  "reason": "Complete intake with valid fields creates ticket without errors",
+                  "uncertainty": 0,
+                  "failure_category": "none"
+                }
+              ]
+            },
+            "validation_errors": [],
+            "prompt_tokens": 2194,
+            "completion_tokens": 144,
+            "status": "OK",
+            "server_total_duration_ns": 102450875357,
+            "done_reason": "stop",
+            "latency_ms": 102452.51905800251
+          }
+        ],
+        "status": "OK",
+        "doctor": {
+          "status": "READY",
+          "server_available": true,
+          "requested_model": "qwen3:4b",
+          "installed_models": [
+            {
+              "name": "qwen3:4b",
+              "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+              "size": 2497293931,
+              "details": {
+                "parent_model": "",
+                "format": "gguf",
+                "family": "qwen3",
+                "families": [
+                  "qwen3"
+                ],
+                "parameter_size": "4.0B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 262144,
+                "embedding_length": 2560,
+                "runner": "ggml"
+              }
+            },
+            {
+              "name": "qwen3:8b",
+              "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+              "size": 5225388164,
+              "details": {
+                "parent_model": "",
+                "format": "gguf",
+                "family": "qwen3",
+                "families": [
+                  "qwen3"
+                ],
+                "parameter_size": "8.2B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 40960,
+                "embedding_length": 4096,
+                "runner": "ggml"
+              }
+            },
+            {
+              "name": "qwen3.5:9b",
+              "digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+              "size": 6550825550,
+              "details": {
+                "parent_model": "model.gguf",
+                "format": "gguf",
+                "family": "qwen35",
+                "families": [
+                  "qwen35"
+                ],
+                "parameter_size": "9.0B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 262144,
+                "embedding_length": 4096,
+                "runner": "llamacpp"
+              }
+            }
+          ],
+          "selected_model": {
+            "name": "qwen3:4b",
+            "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+            "size": 2497293931,
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M",
+              "context_length": 262144,
+              "embedding_length": 2560,
+              "runner": "ggml"
+            }
+          },
+          "elapsed_ms": 3.801363000093261,
+          "error": null
+        },
+        "request_id": "081bdb4f72e84dc5972af6243e2fa147",
+        "started_at": "2026-11-20T07:42:29.156634+00:00",
+        "request_record": "/home/ltp/Code/Graduation/Demo-Agent/outputs/cache/requests/081bdb4f72e84dc5972af6243e2fa147.json",
+        "first_pass_status": "OK"
+      }
+    ],
+    "elapsed_ms": 102459.80409399999,
+    "prompt_tokens": 2194,
+    "completion_tokens": 144,
+    "scope": "all",
+    "same_model_bias": "Same-model judges are correlated; multiple calls/models do not establish independence.",
+    "agreement": {
+      "eligible_items": 1,
+      "agree": 1,
+      "basis": "Independent deterministic fixture/checklist labels; semantic items lack independent human labels."
+    }
+  }
+}

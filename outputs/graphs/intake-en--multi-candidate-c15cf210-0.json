@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "intake_workflow",
+  "name": "Support Intake Workflow",
+  "nodes": [
+    {
+      "id": "input",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "validate_fields",
+      "type": "custom",
+      "config": {
+        "operation": "validate_fields",
+        "args": {
+          "fields": [
+            "email",
+            "message"
+          ],
+          "formats": {
+            "email": "email"
+          }
+        }
+      }
+    },
+    {
+      "id": "request_info",
+      "type": "custom",
+      "config": {
+        "operation": "request_info",
+        "args": {
+          "fields": [
+            "email",
+            "message"
+          ],
+          "status": 400
+        }
+      }
+    },
+    {
+      "id": "create_ticket",
+      "type": "custom",
+      "config": {
+        "operation": "create_ticket",
+        "args": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "input",
+      "target": "validate_fields",
+      "port": "next"
+    },
+    {
+      "source": "validate_fields",
+      "target": "request_info",
+      "port": "true"
+    },
+    {
+      "source": "validate_fields",
+      "target": "create_ticket",
+      "port": "false"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "model": "qwen3:4b",
+  "host": "http://127.0.0.1:11434",
+  "timeout": 300.0,
+  "num_predict": 2048,
+  "num_ctx": 8192,
+  "temperature": 0,
+  "seed": 17,
+  "retries": 0,
+  "cache": true
+}

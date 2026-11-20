@@ -1,0 +1,168 @@
+{
+  "case_id": "order-en",
+  "judge": {
+    "method": "G",
+    "status": "UNAVAILABLE_OR_INVALID",
+    "verdict": "UNKNOWN",
+    "evidence": [
+      {
+        "requirement_id": "O3",
+        "verdict": "UNKNOWN",
+        "votes": [
+          {
+            "requirement_id": "O3",
+            "verdict": "UNKNOWN",
+            "reason": "Model unavailable or invalid judge response",
+            "uncertainty": 1,
+            "node_ids": [],
+            "edge_refs": [],
+            "trace_refs": [],
+            "failure_category": "insufficient_evidence"
+          }
+        ],
+        "deterministic_verdict": "UNKNOWN",
+        "effective_verdict": "UNKNOWN"
+      }
+    ],
+    "calls": [
+      {
+        "kind": "judge-selective",
+        "model": "qwen3:4b",
+        "model_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "configuration": {
+          "model": "qwen3:4b",
+          "host": "http://127.0.0.1:11434",
+          "timeout": 300.0,
+          "num_predict": 2048,
+          "num_ctx": 8192,
+          "temperature": 0,
+          "seed": 17,
+          "retries": 0
+        },
+        "prompt_version": "genie-zero-shot-v2",
+        "prompt_hash": "39fe42427ffc5bb0cbaed20e7b22d363c6d1de6d7c1f9b40a0eb5a00ff7b736d",
+        "schema_hash": "6d92da658db769d3ef31c8e8be995088aad72db8428d78f2cbf2edf122774786",
+        "cached": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "latency_ms": 300107.27564400074,
+        "raw_response": null,
+        "parsed": null,
+        "validation_errors": [],
+        "attempts": [
+          {
+            "attempt_index": 0,
+            "raw_response": null,
+            "parsed": null,
+            "validation_errors": [],
+            "prompt_tokens": null,
+            "completion_tokens": null,
+            "status": "ERROR",
+            "error": "timed out",
+            "latency_ms": 300100.6986440007
+          }
+        ],
+        "status": "ERROR",
+        "doctor": {
+          "status": "READY",
+          "server_available": true,
+          "requested_model": "qwen3:4b",
+          "installed_models": [
+            {
+              "name": "qwen3:4b",
+              "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+              "size": 2497293931,
+              "details": {
+                "parent_model": "",
+                "format": "gguf",
+                "family": "qwen3",
+                "families": [
+                  "qwen3"
+                ],
+                "parameter_size": "4.0B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 262144,
+                "embedding_length": 2560,
+                "runner": "ggml"
+              }
+            },
+            {
+              "name": "qwen3:8b",
+              "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+              "size": 5225388164,
+              "details": {
+                "parent_model": "",
+                "format": "gguf",
+                "family": "qwen3",
+                "families": [
+                  "qwen3"
+                ],
+                "parameter_size": "8.2B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 40960,
+                "embedding_length": 4096,
+                "runner": "ggml"
+              }
+            },
+            {
+              "name": "qwen3.5:9b",
+              "digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+              "size": 6550825550,
+              "details": {
+                "parent_model": "model.gguf",
+                "format": "gguf",
+                "family": "qwen35",
+                "families": [
+                  "qwen35"
+                ],
+                "parameter_size": "9.0B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 262144,
+                "embedding_length": 4096,
+                "runner": "llamacpp"
+              }
+            }
+          ],
+          "selected_model": {
+            "name": "qwen3:4b",
+            "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+            "size": 2497293931,
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M",
+              "context_length": 262144,
+              "embedding_length": 2560,
+              "runner": "ggml"
+            }
+          },
+          "elapsed_ms": 4.116576001251815,
+          "error": null
+        },
+        "request_id": "500f52d8e5984025829474fcd21a25c8",
+        "started_at": "2026-11-20T07:44:58.075735+00:00",
+        "request_record": "/home/ltp/Code/Graduation/Demo-Agent/outputs/cache/requests/500f52d8e5984025829474fcd21a25c8.json",
+        "first_pass_status": "ERROR",
+        "error": "timed out",
+        "judge_errors": [
+          "JUDGE_REQUIREMENT_COVERAGE"
+        ]
+      }
+    ],
+    "elapsed_ms": 300109.8704899996,
+    "prompt_tokens": null,
+    "completion_tokens": null,
+    "scope": "selective",
+    "same_model_bias": "Same-model judges are correlated; multiple calls/models do not establish independence.",
+    "agreement": {
+      "eligible_items": 0,
+      "agree": 0,
+      "basis": "Independent deterministic fixture/checklist labels; semantic items lack independent human labels."
+    }
+  }
+}

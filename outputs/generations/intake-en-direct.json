@@ -1,0 +1,167 @@
+{
+  "case_id": "intake-en",
+  "language": "en",
+  "strategy": "direct",
+  "candidate_count": 1,
+  "candidates": [
+    {
+      "case_id": "intake-en",
+      "language": "en",
+      "strategy": "direct",
+      "status": "ERROR",
+      "workflow": null,
+      "validation_errors": [],
+      "calls": [
+        {
+          "kind": "workflow",
+          "model": "qwen3.5:9b",
+          "model_digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+          "configuration": {
+            "model": "qwen3.5:9b",
+            "host": "http://127.0.0.1:11434",
+            "timeout": 180.0,
+            "num_predict": 4096,
+            "temperature": 0,
+            "seed": 17,
+            "retries": 0
+          },
+          "prompt_version": "genie-zero-shot-v1",
+          "prompt_hash": "a9ef392ec7fda55d85586d7bb18752933adc4b16671faad3831ee7f431a26628",
+          "schema_hash": "d538ae34030daf1f88f88006f5a0b2aaa9cf891d7d0e25d3e04260fea20cf8dd",
+          "cached": false,
+          "prompt_tokens": null,
+          "completion_tokens": null,
+          "latency_ms": 180124.53118600024,
+          "raw_response": null,
+          "parsed": null,
+          "validation_errors": [],
+          "attempts": [
+            {
+              "attempt_index": 0,
+              "raw_response": null,
+              "parsed": null,
+              "validation_errors": [],
+              "prompt_tokens": null,
+              "completion_tokens": null,
+              "status": "ERROR",
+              "error": "timed out",
+              "latency_ms": 180108.67431800216
+            }
+          ],
+          "status": "ERROR",
+          "doctor": {
+            "status": "READY",
+            "server_available": true,
+            "requested_model": "qwen3.5:9b",
+            "installed_models": [
+              {
+                "name": "qwen3:4b",
+                "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+                "size": 2497293931,
+                "details": {
+                  "parent_model": "",
+                  "format": "gguf",
+                  "family": "qwen3",
+                  "families": [
+                    "qwen3"
+                  ],
+                  "parameter_size": "4.0B",
+                  "quantization_level": "Q4_K_M",
+                  "context_length": 262144,
+                  "embedding_length": 2560,
+                  "runner": "ggml"
+                }
+              },
+              {
+                "name": "qwen3:8b",
+                "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+                "size": 5225388164,
+                "details": {
+                  "parent_model": "",
+                  "format": "gguf",
+                  "family": "qwen3",
+                  "families": [
+                    "qwen3"
+                  ],
+                  "parameter_size": "8.2B",
+                  "quantization_level": "Q4_K_M",
+                  "context_length": 40960,
+                  "embedding_length": 4096,
+                  "runner": "ggml"
+                }
+              },
+              {
+                "name": "qwen3.5:9b",
+                "digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+                "size": 6550825550,
+                "details": {
+                  "parent_model": "model.gguf",
+                  "format": "gguf",
+                  "family": "qwen35",
+                  "families": [
+                    "qwen35"
+                  ],
+                  "parameter_size": "9.0B",
+                  "quantization_level": "Q4_K_M",
+                  "context_length": 262144,
+                  "embedding_length": 4096,
+                  "runner": "llamacpp"
+                }
+              }
+            ],
+            "selected_model": {
+              "name": "qwen3.5:9b",
+              "digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+              "size": 6550825550,
+              "details": {
+                "parent_model": "model.gguf",
+                "format": "gguf",
+                "family": "qwen35",
+                "families": [
+                  "qwen35"
+                ],
+                "parameter_size": "9.0B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 262144,
+                "embedding_length": 4096,
+                "runner": "llamacpp"
+              }
+            },
+            "elapsed_ms": 10.153987997910008,
+            "error": null
+          },
+          "first_pass_status": "ERROR",
+          "error": "timed out"
+        }
+      ],
+      "plans": [],
+      "language_translation": "none",
+      "same_model_planning": true,
+      "candidate_index": 0,
+      "evaluation": null,
+      "rank_key": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    }
+  ],
+  "selected_candidate_index": 0,
+  "selection_accepted": false,
+  "generation_metrics": {
+    "prompt_tokens": null,
+    "completion_tokens": null,
+    "latency_ms": 180124.53118600024,
+    "actual_inference_calls": 1,
+    "cached_calls": 0
+  },
+  "judge_metrics": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "latency_ms": 0,
+    "actual_inference_calls": 0,
+    "cached_calls": 0
+  }
+}

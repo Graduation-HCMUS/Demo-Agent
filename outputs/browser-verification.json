@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "file_url": "file:///home/ltp/Code/Graduation/Demo-Agent/outputs/report.html",
+  "offline": true,
+  "workflow_options": 69,
+  "keyword_failure_case": "approval-en--swapped_branches",
+  "actual_generated_example": "approval-en--direct-c15cf210-0",
+  "actual_issue_nodes": 8,
+  "approved_executed_nodes": 9,
+  "rejected_send_executed": false,
+  "mobile_dimensions": {
+    "viewport": 390,
+    "body": 390
+  },
+  "page_errors": [],
+  "remote_requests": []
+}

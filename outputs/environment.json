@@ -1,0 +1,6 @@
+{
+  "python": "3.14.10",
+  "platform": "Linux-7.3.4-200.fc44.x86_64-x86_64-with-glibc2.43",
+  "observed_ollama_cpu_allocation": "ollama ps showed qwen3.5:9b at 100% CPU with context 4096 after first timeout; no GPU/RAM requirement inferred",
+  "logical_cpu_count_reported_by_python": 12
+}

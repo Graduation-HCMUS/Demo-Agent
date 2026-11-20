@@ -1,0 +1,16 @@
+{
+  "outputs": {
+    "html": "/home/ltp/Code/Graduation/Demo-Agent/experiments/python-workflow-evaluation/outputs/report.html",
+    "json": "/home/ltp/Code/Graduation/Demo-Agent/experiments/python-workflow-evaluation/outputs/results.json",
+    "summary": "/home/ltp/Code/Graduation/Demo-Agent/experiments/python-workflow-evaluation/outputs/summary.md",
+    "svg_count": 67
+  },
+  "models": [
+    {
+      "model": "qwen3:4b",
+      "status": "COMPLETED",
+      "error": null,
+      "actual_generation_calls": 7
+    }
+  ]
+}

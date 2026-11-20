@@ -1,0 +1,944 @@
+{
+  "case_id": "intake-en",
+  "language": "en",
+  "strategy": "direct",
+  "candidate_count": 1,
+  "candidates": [
+    {
+      "case_id": "intake-en",
+      "language": "en",
+      "strategy": "direct",
+      "status": "INVALID_WORKFLOW",
+      "workflow": {
+        "schema_version": "1.0",
+        "workflow_id": "intake_workflow",
+        "name": "Support Intake Workflow",
+        "nodes": [
+          {
+            "id": "input",
+            "type": "input",
+            "config": {}
+          },
+          {
+            "id": "validate_fields",
+            "type": "custom",
+            "config": {
+              "operation": "validate_fields",
+              "args": {
+                "fields": [
+                  "email",
+                  "message"
+                ],
+                "formats": {
+                  "email": "email"
+                }
+              }
+            }
+          },
+          {
+            "id": "request_info",
+            "type": "custom",
+            "config": {
+              "operation": "request_info",
+              "args": {
+                "fields": [
+                  "email",
+                  "message"
+                ],
+                "status": 400
+              }
+            }
+          },
+          {
+            "id": "create_ticket",
+            "type": "custom",
+            "config": {
+              "operation": "create_ticket",
+              "args": {}
+            }
+          }
+        ],
+        "edges": [
+          {
+            "source": "input",
+            "target": "validate_fields",
+            "port": "next"
+          },
+          {
+            "source": "validate_fields",
+            "target": "request_info",
+            "port": "true"
+          },
+          {
+            "source": "validate_fields",
+            "target": "create_ticket",
+            "port": "false"
+          }
+        ]
+      },
+      "validation_errors": [
+        {
+          "code": "OUTPUT_MISSING",
+          "category": "structure",
+          "node_id": null,
+          "message": "At least one output required"
+        },
+        {
+          "code": "EDGE_PORTS",
+          "category": "structure",
+          "node_id": "validate_fields",
+          "message": "Expected outgoing ports ['next']; got ['false', 'true']"
+        },
+        {
+          "code": "EDGE_PORTS",
+          "category": "structure",
+          "node_id": "request_info",
+          "message": "Expected outgoing ports ['next']; got []"
+        },
+        {
+          "code": "EDGE_PORTS",
+          "category": "structure",
+          "node_id": "create_ticket",
+          "message": "Expected outgoing ports ['next']; got []"
+        }
+      ],
+      "calls": [
+        {
+          "kind": "workflow",
+          "model": "qwen3:4b",
+          "model_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+          "configuration": {
+            "model": "qwen3:4b",
+            "host": "http://127.0.0.1:11434",
+            "timeout": 300.0,
+            "num_predict": 2048,
+            "num_ctx": 8192,
+            "temperature": 0,
+            "seed": 17,
+            "retries": 0
+          },
+          "prompt_version": "genie-zero-shot-v2",
+          "prompt_hash": "f783df3386c10681bcd6a1ff777db6e6a8329e769640ea40bb86bbdee1bedd8c",
+          "schema_hash": "d538ae34030daf1f88f88006f5a0b2aaa9cf891d7d0e25d3e04260fea20cf8dd",
+          "cached": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "latency_ms": 4.4472160006989725,
+          "raw_response": "{\n  \"schema_version\": \"1.0\",\n  \"workflow_id\": \"intake_workflow\",\n  \"name\": \"Support Intake Workflow\",\n  \"nodes\": [\n    {\n      \"id\": \"input\",\n      \"type\": \"input\",\n      \"config\": {}\n    },\n    {\n      \"id\": \"validate_fields\",\n      \"type\": \"custom\",\n      \"config\": {\n        \"operation\": \"validate_fields\",\n        \"args\": {\n          \"fields\": [\"email\", \"message\"],\n          \"formats\": {\n            \"email\": \"email\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"request_info\",\n      \"type\": \"custom\",\n      \"config\": {\n        \"operation\": \"request_info\",\n        \"args\": {\n          \"fields\": [\n            \"email\",\n            \"message\"\n          ],\n          \"status\": 400\n        }\n      }\n    },\n    {\n      \"id\": \"create_ticket\",\n      \"type\": \"custom\",\n      \"config\": {\n        \"operation\": \"create_ticket\",\n        \"args\": {}\n      }\n    }\n  ],\n  \"edges\": [\n    {\n      \"source\": \"input\",\n      \"target\": \"validate_fields\",\n      \"port\": \"next\"\n    },\n    {\n      \"source\": \"validate_fields\",\n      \"target\": \"request_info\",\n      \"port\": \"true\"\n    },\n    {\n      \"source\": \"validate_fields\",\n      \"target\": \"create_ticket\",\n      \"port\": \"false\"\n    }\n  ]\n}",
+          "parsed": {
+            "schema_version": "1.0",
+            "workflow_id": "intake_workflow",
+            "name": "Support Intake Workflow",
+            "nodes": [
+              {
+                "id": "input",
+                "type": "input",
+                "config": {}
+              },
+              {
+                "id": "validate_fields",
+                "type": "custom",
+                "config": {
+                  "operation": "validate_fields",
+                  "args": {
+                    "fields": [
+                      "email",
+                      "message"
+                    ],
+                    "formats": {
+                      "email": "email"
+                    }
+                  }
+                }
+              },
+              {
+                "id": "request_info",
+                "type": "custom",
+                "config": {
+                  "operation": "request_info",
+                  "args": {
+                    "fields": [
+                      "email",
+                      "message"
+                    ],
+                    "status": 400
+                  }
+                }
+              },
+              {
+                "id": "create_ticket",
+                "type": "custom",
+                "config": {
+                  "operation": "create_ticket",
+                  "args": {}
+                }
+              }
+            ],
+            "edges": [
+              {
+                "source": "input",
+                "target": "validate_fields",
+                "port": "next"
+              },
+              {
+                "source": "validate_fields",
+                "target": "request_info",
+                "port": "true"
+              },
+              {
+                "source": "validate_fields",
+                "target": "create_ticket",
+                "port": "false"
+              }
+            ]
+          },
+          "validation_errors": [],
+          "attempts": [
+            {
+              "attempt_index": 0,
+              "raw_response": "{\n  \"schema_version\": \"1.0\",\n  \"workflow_id\": \"intake_workflow\",\n  \"name\": \"Support Intake Workflow\",\n  \"nodes\": [\n    {\n      \"id\": \"input\",\n      \"type\": \"input\",\n      \"config\": {}\n    },\n    {\n      \"id\": \"validate_fields\",\n      \"type\": \"custom\",\n      \"config\": {\n        \"operation\": \"validate_fields\",\n        \"args\": {\n          \"fields\": [\"email\", \"message\"],\n          \"formats\": {\n            \"email\": \"email\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"request_info\",\n      \"type\": \"custom\",\n      \"config\": {\n        \"operation\": \"request_info\",\n        \"args\": {\n          \"fields\": [\n            \"email\",\n            \"message\"\n          ],\n          \"status\": 400\n        }\n      }\n    },\n    {\n      \"id\": \"create_ticket\",\n      \"type\": \"custom\",\n      \"config\": {\n        \"operation\": \"create_ticket\",\n        \"args\": {}\n      }\n    }\n  ],\n  \"edges\": [\n    {\n      \"source\": \"input\",\n      \"target\": \"validate_fields\",\n      \"port\": \"next\"\n    },\n    {\n      \"source\": \"validate_fields\",\n      \"target\": \"request_info\",\n      \"port\": \"true\"\n    },\n    {\n      \"source\": \"validate_fields\",\n      \"target\": \"create_ticket\",\n      \"port\": \"false\"\n    }\n  ]\n}",
+              "parsed": {
+                "schema_version": "1.0",
+                "workflow_id": "intake_workflow",
+                "name": "Support Intake Workflow",
+                "nodes": [
+                  {
+                    "id": "input",
+                    "type": "input",
+                    "config": {}
+                  },
+                  {
+                    "id": "validate_fields",
+                    "type": "custom",
+                    "config": {
+                      "operation": "validate_fields",
+                      "args": {
+                        "fields": [
+                          "email",
+                          "message"
+                        ],
+                        "formats": {
+                          "email": "email"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "id": "request_info",
+                    "type": "custom",
+                    "config": {
+                      "operation": "request_info",
+                      "args": {
+                        "fields": [
+                          "email",
+                          "message"
+                        ],
+                        "status": 400
+                      }
+                    }
+                  },
+                  {
+                    "id": "create_ticket",
+                    "type": "custom",
+                    "config": {
+                      "operation": "create_ticket",
+                      "args": {}
+                    }
+                  }
+                ],
+                "edges": [
+                  {
+                    "source": "input",
+                    "target": "validate_fields",
+                    "port": "next"
+                  },
+                  {
+                    "source": "validate_fields",
+                    "target": "request_info",
+                    "port": "true"
+                  },
+                  {
+                    "source": "validate_fields",
+                    "target": "create_ticket",
+                    "port": "false"
+                  }
+                ]
+              },
+              "validation_errors": [],
+              "prompt_tokens": 1347,
+              "completion_tokens": 319,
+              "status": "OK",
+              "server_total_duration_ns": 66161938248,
+              "done_reason": "stop",
+              "latency_ms": 66164.24491100042
+            }
+          ],
+          "status": "OK",
+          "doctor": {
+            "status": "READY",
+            "server_available": true,
+            "requested_model": "qwen3:4b",
+            "installed_models": [
+              {
+                "name": "qwen3:4b",
+                "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+                "size": 2497293931,
+                "details": {
+                  "parent_model": "",
+                  "format": "gguf",
+                  "family": "qwen3",
+                  "families": [
+                    "qwen3"
+                  ],
+                  "parameter_size": "4.0B",
+                  "quantization_level": "Q4_K_M",
+                  "context_length": 262144,
+                  "embedding_length": 2560,
+                  "runner": "ggml"
+                }
+              },
+              {
+                "name": "qwen3:8b",
+                "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+                "size": 5225388164,
+                "details": {
+                  "parent_model": "",
+                  "format": "gguf",
+                  "family": "qwen3",
+                  "families": [
+                    "qwen3"
+                  ],
+                  "parameter_size": "8.2B",
+                  "quantization_level": "Q4_K_M",
+                  "context_length": 40960,
+                  "embedding_length": 4096,
+                  "runner": "ggml"
+                }
+              },
+              {
+                "name": "qwen3.5:9b",
+                "digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+                "size": 6550825550,
+                "details": {
+                  "parent_model": "model.gguf",
+                  "format": "gguf",
+                  "family": "qwen35",
+                  "families": [
+                    "qwen35"
+                  ],
+                  "parameter_size": "9.0B",
+                  "quantization_level": "Q4_K_M",
+                  "context_length": 262144,
+                  "embedding_length": 4096,
+                  "runner": "llamacpp"
+                }
+              }
+            ],
+            "selected_model": {
+              "name": "qwen3:4b",
+              "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+              "size": 2497293931,
+              "details": {
+                "parent_model": "",
+                "format": "gguf",
+                "family": "qwen3",
+                "families": [
+                  "qwen3"
+                ],
+                "parameter_size": "4.0B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 262144,
+                "embedding_length": 2560,
+                "runner": "ggml"
+              }
+            },
+            "elapsed_ms": 7.063650002237409,
+            "error": null
+          },
+          "request_id": "3ce29b4295a346e291d174eda40a9fc7",
+          "started_at": "2026-11-20T07:31:41.345763+00:00",
+          "request_record": "/home/ltp/Code/Graduation/Demo-Agent/outputs/cache/requests/3ce29b4295a346e291d174eda40a9fc7.json",
+          "first_pass_status": "OK",
+          "original_latency_ms": 66173.09359799765,
+          "original_prompt_tokens": 1347,
+          "original_completion_tokens": 319
+        }
+      ],
+      "plans": [],
+      "language_translation": "none",
+      "same_model_planning": true,
+      "candidate_index": 0,
+      "evaluation": {
+        "comparison": {
+          "B0": {
+            "verdict": "FAIL",
+            "elapsed_ms": 0.3221790029783733,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "judge_status": "NOT_APPLICABLE"
+          },
+          "B1": {
+            "verdict": "FAIL",
+            "elapsed_ms": 0.4911480027658399,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "judge_status": "NOT_APPLICABLE"
+          },
+          "B2": {
+            "verdict": "FAIL",
+            "elapsed_ms": 0.9489290023338981,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "judge_status": "NOT_APPLICABLE"
+          },
+          "B3": {
+            "verdict": "FAIL",
+            "elapsed_ms": 1.6415420031989925,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "judge_status": "NOT_APPLICABLE"
+          },
+          "B4": {
+            "verdict": "FAIL",
+            "elapsed_ms": 2.912916002969723,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "judge_status": "NOT_APPLICABLE"
+          },
+          "B5": {
+            "verdict": "FAIL",
+            "elapsed_ms": 2.912916002969723,
+            "prompt_tokens": null,
+            "completion_tokens": null,
+            "judge_status": "DISABLED"
+          }
+        },
+        "methods": {
+          "B0": {
+            "method": "B0",
+            "verdict": "FAIL",
+            "evidence": [
+              {
+                "code": "OUTPUT_MISSING",
+                "category": "structure",
+                "node_id": null,
+                "message": "At least one output required"
+              },
+              {
+                "code": "EDGE_PORTS",
+                "category": "structure",
+                "node_id": "validate_fields",
+                "message": "Expected outgoing ports ['next']; got ['false', 'true']"
+              },
+              {
+                "code": "EDGE_PORTS",
+                "category": "structure",
+                "node_id": "request_info",
+                "message": "Expected outgoing ports ['next']; got []"
+              },
+              {
+                "code": "EDGE_PORTS",
+                "category": "structure",
+                "node_id": "create_ticket",
+                "message": "Expected outgoing ports ['next']; got []"
+              }
+            ],
+            "elapsed_ms": 0.3221790029783733,
+            "prompt_tokens": 0,
+            "completion_tokens": 0
+          },
+          "B": {
+            "method": "B",
+            "verdict": "PASS",
+            "evidence": [
+              {
+                "term": "ticket",
+                "matched": [
+                  "ticket",
+                  "ticket",
+                  "create_ticket"
+                ],
+                "verdict": "PASS"
+              },
+              {
+                "term": "validation",
+                "matched": [
+                  "validate",
+                  "validate_fields"
+                ],
+                "verdict": "PASS"
+              }
+            ],
+            "elapsed_ms": 0.1689689997874666,
+            "prompt_tokens": 0,
+            "completion_tokens": 0
+          },
+          "C": {
+            "method": "C",
+            "verdict": "FAIL",
+            "evidence": [
+              {
+                "requirement_id": "I1",
+                "description": "Reject incomplete intake and create only complete tickets",
+                "source_ids": [
+                  "N8N-routing"
+                ],
+                "severity": "major",
+                "evaluation_method": "trace",
+                "expected_evidence": "Independent state/trace assertions across the named fixtures",
+                "operations": [
+                  "validate_fields",
+                  "create_ticket",
+                  "request_info"
+                ],
+                "provenance": "SOURCE_ADAPTATION",
+                "verdict": "FAIL",
+                "evidence": [
+                  {
+                    "fixture_id": "complete",
+                    "verdict": "FAIL",
+                    "failures": [
+                      "Execution INVALID: [{'code': 'OUTPUT_MISSING', 'category': 'structure', 'node_id': None, 'message': 'At least one output required'}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'validate_fields', 'message': \"Expected outgoing ports ['next']; got ['false', 'true']\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'request_info', 'message': \"Expected outgoing ports ['next']; got []\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'create_ticket', 'message': \"Expected outgoing ports ['next']; got []\"}]",
+                      "state.ticket_created: missing; expected True",
+                      "Required action missing: create_ticket"
+                    ]
+                  },
+                  {
+                    "fixture_id": "missing",
+                    "verdict": "FAIL",
+                    "failures": [
+                      "Execution INVALID: [{'code': 'OUTPUT_MISSING', 'category': 'structure', 'node_id': None, 'message': 'At least one output required'}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'validate_fields', 'message': \"Expected outgoing ports ['next']; got ['false', 'true']\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'request_info', 'message': \"Expected outgoing ports ['next']; got []\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'create_ticket', 'message': \"Expected outgoing ports ['next']; got []\"}]",
+                      "state.status: missing; expected 400",
+                      "Required action missing: request_info"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "elapsed_ms": 0.2863400004571304,
+            "prompt_tokens": 0,
+            "completion_tokens": 0
+          },
+          "C_static": {
+            "method": "C",
+            "verdict": "UNKNOWN",
+            "evidence": [
+              {
+                "requirement_id": "I1",
+                "description": "Reject incomplete intake and create only complete tickets",
+                "source_ids": [
+                  "N8N-routing"
+                ],
+                "severity": "major",
+                "evaluation_method": "trace",
+                "expected_evidence": "Independent state/trace assertions across the named fixtures",
+                "operations": [
+                  "validate_fields",
+                  "create_ticket",
+                  "request_info"
+                ],
+                "provenance": "SOURCE_ADAPTATION",
+                "verdict": "UNKNOWN",
+                "evidence": [
+                  "Operation names present; execution evidence not supplied."
+                ]
+              }
+            ],
+            "elapsed_ms": 0.29274199914652854,
+            "prompt_tokens": 0,
+            "completion_tokens": 0
+          },
+          "D": {
+            "method": "D",
+            "verdict": "FAIL",
+            "evidence": [
+              {
+                "code": "OUTPUT_MISSING",
+                "category": "structure",
+                "node_id": null,
+                "message": "At least one output required"
+              },
+              {
+                "code": "EDGE_PORTS",
+                "category": "structure",
+                "node_id": "validate_fields",
+                "message": "Expected outgoing ports ['next']; got ['false', 'true']"
+              },
+              {
+                "code": "EDGE_PORTS",
+                "category": "structure",
+                "node_id": "request_info",
+                "message": "Expected outgoing ports ['next']; got []"
+              },
+              {
+                "code": "EDGE_PORTS",
+                "category": "structure",
+                "node_id": "create_ticket",
+                "message": "Expected outgoing ports ['next']; got []"
+              }
+            ],
+            "elapsed_ms": 0.33400800020899624,
+            "prompt_tokens": 0,
+            "completion_tokens": 0
+          },
+          "E": {
+            "method": "E",
+            "verdict": "FAIL",
+            "evidence": [
+              {
+                "fixture_id": "complete",
+                "expected_state": {
+                  "ticket_created": true
+                },
+                "expected_trace_constraints": {
+                  "required_actions": [
+                    "create_ticket"
+                  ],
+                  "action_order": [],
+                  "branches": {}
+                },
+                "forbidden_effects": [
+                  "request_info"
+                ],
+                "execution": {
+                  "status": "INVALID",
+                  "state": {
+                    "email": "user@example.test",
+                    "message": "help",
+                    "effects": [],
+                    "messages": []
+                  },
+                  "trace": [],
+                  "errors": [
+                    {
+                      "code": "OUTPUT_MISSING",
+                      "category": "structure",
+                      "node_id": null,
+                      "message": "At least one output required"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "validate_fields",
+                      "message": "Expected outgoing ports ['next']; got ['false', 'true']"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "request_info",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "create_ticket",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    }
+                  ]
+                },
+                "failures": [
+                  "Execution INVALID: [{'code': 'OUTPUT_MISSING', 'category': 'structure', 'node_id': None, 'message': 'At least one output required'}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'validate_fields', 'message': \"Expected outgoing ports ['next']; got ['false', 'true']\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'request_info', 'message': \"Expected outgoing ports ['next']; got []\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'create_ticket', 'message': \"Expected outgoing ports ['next']; got []\"}]",
+                  "state.ticket_created: missing; expected True",
+                  "Required action missing: create_ticket"
+                ],
+                "verdict": "FAIL"
+              },
+              {
+                "fixture_id": "missing",
+                "expected_state": {
+                  "status": 400
+                },
+                "expected_trace_constraints": {
+                  "required_actions": [
+                    "request_info"
+                  ],
+                  "action_order": [],
+                  "branches": {}
+                },
+                "forbidden_effects": [
+                  "create_ticket"
+                ],
+                "execution": {
+                  "status": "INVALID",
+                  "state": {
+                    "email": "",
+                    "message": "help",
+                    "effects": [],
+                    "messages": []
+                  },
+                  "trace": [],
+                  "errors": [
+                    {
+                      "code": "OUTPUT_MISSING",
+                      "category": "structure",
+                      "node_id": null,
+                      "message": "At least one output required"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "validate_fields",
+                      "message": "Expected outgoing ports ['next']; got ['false', 'true']"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "request_info",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "create_ticket",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    }
+                  ]
+                },
+                "failures": [
+                  "Execution INVALID: [{'code': 'OUTPUT_MISSING', 'category': 'structure', 'node_id': None, 'message': 'At least one output required'}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'validate_fields', 'message': \"Expected outgoing ports ['next']; got ['false', 'true']\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'request_info', 'message': \"Expected outgoing ports ['next']; got []\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'create_ticket', 'message': \"Expected outgoing ports ['next']; got []\"}]",
+                  "state.status: missing; expected 400",
+                  "Required action missing: request_info"
+                ],
+                "verdict": "FAIL"
+              }
+            ],
+            "elapsed_ms": 0.6990149995544925,
+            "prompt_tokens": 0,
+            "completion_tokens": 0
+          },
+          "F": {
+            "method": "F",
+            "verdict": "FAIL",
+            "evidence": [
+              {
+                "relation_id": "email_added",
+                "source_ids": [
+                  "N8N-routing"
+                ],
+                "changed_fields": {
+                  "email": "other@example.test"
+                },
+                "base": {
+                  "status": "INVALID",
+                  "state": {
+                    "email": "",
+                    "message": "help",
+                    "effects": [],
+                    "messages": []
+                  },
+                  "trace": [],
+                  "errors": [
+                    {
+                      "code": "OUTPUT_MISSING",
+                      "category": "structure",
+                      "node_id": null,
+                      "message": "At least one output required"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "validate_fields",
+                      "message": "Expected outgoing ports ['next']; got ['false', 'true']"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "request_info",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "create_ticket",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    }
+                  ]
+                },
+                "changed": {
+                  "status": "INVALID",
+                  "state": {
+                    "email": "other@example.test",
+                    "message": "help",
+                    "effects": [],
+                    "messages": []
+                  },
+                  "trace": [],
+                  "errors": [
+                    {
+                      "code": "OUTPUT_MISSING",
+                      "category": "structure",
+                      "node_id": null,
+                      "message": "At least one output required"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "validate_fields",
+                      "message": "Expected outgoing ports ['next']; got ['false', 'true']"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "request_info",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "create_ticket",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    }
+                  ]
+                },
+                "expected_base": {
+                  "status": 400
+                },
+                "expected_changed": {
+                  "ticket_created": true
+                },
+                "failures": [
+                  "base: INVALID: [{'code': 'OUTPUT_MISSING', 'category': 'structure', 'node_id': None, 'message': 'At least one output required'}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'validate_fields', 'message': \"Expected outgoing ports ['next']; got ['false', 'true']\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'request_info', 'message': \"Expected outgoing ports ['next']; got []\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'create_ticket', 'message': \"Expected outgoing ports ['next']; got []\"}]",
+                  "base.status: missing; expected 400",
+                  "changed: INVALID: [{'code': 'OUTPUT_MISSING', 'category': 'structure', 'node_id': None, 'message': 'At least one output required'}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'validate_fields', 'message': \"Expected outgoing ports ['next']; got ['false', 'true']\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'request_info', 'message': \"Expected outgoing ports ['next']; got []\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'create_ticket', 'message': \"Expected outgoing ports ['next']; got []\"}]",
+                  "changed.ticket_created: missing; expected True",
+                  "Expected behavioral difference absent"
+                ],
+                "verdict": "FAIL"
+              },
+              {
+                "relation_id": "message_added",
+                "source_ids": [
+                  "N8N-routing"
+                ],
+                "changed_fields": {
+                  "message": "details"
+                },
+                "base": {
+                  "status": "INVALID",
+                  "state": {
+                    "email": "a@example.test",
+                    "message": "",
+                    "effects": [],
+                    "messages": []
+                  },
+                  "trace": [],
+                  "errors": [
+                    {
+                      "code": "OUTPUT_MISSING",
+                      "category": "structure",
+                      "node_id": null,
+                      "message": "At least one output required"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "validate_fields",
+                      "message": "Expected outgoing ports ['next']; got ['false', 'true']"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "request_info",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "create_ticket",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    }
+                  ]
+                },
+                "changed": {
+                  "status": "INVALID",
+                  "state": {
+                    "email": "a@example.test",
+                    "message": "details",
+                    "effects": [],
+                    "messages": []
+                  },
+                  "trace": [],
+                  "errors": [
+                    {
+                      "code": "OUTPUT_MISSING",
+                      "category": "structure",
+                      "node_id": null,
+                      "message": "At least one output required"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "validate_fields",
+                      "message": "Expected outgoing ports ['next']; got ['false', 'true']"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "request_info",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    },
+                    {
+                      "code": "EDGE_PORTS",
+                      "category": "structure",
+                      "node_id": "create_ticket",
+                      "message": "Expected outgoing ports ['next']; got []"
+                    }
+                  ]
+                },
+                "expected_base": {
+                  "status": 400
+                },
+                "expected_changed": {
+                  "ticket_created": true
+                },
+                "failures": [
+                  "base: INVALID: [{'code': 'OUTPUT_MISSING', 'category': 'structure', 'node_id': None, 'message': 'At least one output required'}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'validate_fields', 'message': \"Expected outgoing ports ['next']; got ['false', 'true']\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'request_info', 'message': \"Expected outgoing ports ['next']; got []\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'create_ticket', 'message': \"Expected outgoing ports ['next']; got []\"}]",
+                  "base.status: missing; expected 400",
+                  "changed: INVALID: [{'code': 'OUTPUT_MISSING', 'category': 'structure', 'node_id': None, 'message': 'At least one output required'}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'validate_fields', 'message': \"Expected outgoing ports ['next']; got ['false', 'true']\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'request_info', 'message': \"Expected outgoing ports ['next']; got []\"}, {'code': 'EDGE_PORTS', 'category': 'structure', 'node_id': 'create_ticket', 'message': \"Expected outgoing ports ['next']; got []\"}]",
+                  "changed.ticket_created: missing; expected True",
+                  "Expected behavioral difference absent"
+                ],
+                "verdict": "FAIL"
+              }
+            ],
+            "elapsed_ms": 1.2713739997707307,
+            "prompt_tokens": 0,
+            "completion_tokens": 0
+          },
+          "G": {
+            "method": "G",
+            "verdict": "UNKNOWN",
+            "evidence": [],
+            "elapsed_ms": 0,
+            "prompt_tokens": null,
+            "completion_tokens": null,
+            "status": "DISABLED"
+          }
+        }
+      },
+      "rank_key": [
+        0,
+        0.0,
+        0.0,
+        0,
+        -7
+      ]
+    }
+  ],
+  "selected_candidate_index": 0,
+  "selection_accepted": false,
+  "generation_metrics": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "latency_ms": 4.4472160006989725,
+    "actual_inference_calls": 0,
+    "cached_calls": 1
+  },
+  "judge_metrics": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "latency_ms": 0,
+    "actual_inference_calls": 0,
+    "cached_calls": 0
+  }
+}

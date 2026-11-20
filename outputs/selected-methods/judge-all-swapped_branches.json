@@ -1,0 +1,205 @@
+{
+  "case_id": "intake-en",
+  "mutation_id": "swapped_branches",
+  "expected_valid": false,
+  "judge": {
+    "method": "G",
+    "status": "RUN",
+    "verdict": "FAIL",
+    "evidence": [
+      {
+        "requirement_id": "I1",
+        "verdict": "UNKNOWN",
+        "votes": [
+          {
+            "requirement_id": "I1",
+            "verdict": "UNKNOWN",
+            "node_ids": [
+              "create"
+            ],
+            "edge_refs": [],
+            "trace_refs": [
+              "complete"
+            ],
+            "reason": "Judge evidence absent or references unavailable entities",
+            "uncertainty": 1,
+            "failure_category": "policy"
+          }
+        ],
+        "deterministic_verdict": "FAIL",
+        "effective_verdict": "FAIL"
+      }
+    ],
+    "calls": [
+      {
+        "kind": "judge-all",
+        "model": "qwen3:4b",
+        "model_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "configuration": {
+          "model": "qwen3:4b",
+          "host": "http://127.0.0.1:11434",
+          "timeout": 300.0,
+          "num_predict": 2048,
+          "num_ctx": 8192,
+          "temperature": 0,
+          "seed": 17,
+          "retries": 0
+        },
+        "prompt_version": "genie-zero-shot-v2",
+        "prompt_hash": "7e58b300cad761503bd54c9ac1bbbd460eb84b8394f02095f62bb47bbba816bd",
+        "schema_hash": "6d92da658db769d3ef31c8e8be995088aad72db8428d78f2cbf2edf122774786",
+        "cached": false,
+        "prompt_tokens": 1712,
+        "completion_tokens": 109,
+        "latency_ms": 46416.263898998295,
+        "raw_response": "{\n  \"items\": [\n    {\n      \"requirement_id\": \"I1\",\n      \"verdict\": \"FAIL\",\n      \"node_ids\": [\"create\"],\n      \"edge_refs\": [],\n      \"trace_refs\": [\"complete\"],\n      \"reason\": \"Execution INVALID: [{'code': 'POLICY_GUARD', 'category': 'policy', 'node_id': 'create', 'message': 'valid_before_create'}]\",\n      \"uncertainty\": 0,\n      \"failure_category\": \"policy\"\n    }\n  ]\n}",
+        "parsed": {
+          "items": [
+            {
+              "requirement_id": "I1",
+              "verdict": "FAIL",
+              "node_ids": [
+                "create"
+              ],
+              "edge_refs": [],
+              "trace_refs": [
+                "complete"
+              ],
+              "reason": "Execution INVALID: [{'code': 'POLICY_GUARD', 'category': 'policy', 'node_id': 'create', 'message': 'valid_before_create'}]",
+              "uncertainty": 0,
+              "failure_category": "policy"
+            }
+          ]
+        },
+        "validation_errors": [],
+        "attempts": [
+          {
+            "attempt_index": 0,
+            "raw_response": "{\n  \"items\": [\n    {\n      \"requirement_id\": \"I1\",\n      \"verdict\": \"FAIL\",\n      \"node_ids\": [\"create\"],\n      \"edge_refs\": [],\n      \"trace_refs\": [\"complete\"],\n      \"reason\": \"Execution INVALID: [{'code': 'POLICY_GUARD', 'category': 'policy', 'node_id': 'create', 'message': 'valid_before_create'}]\",\n      \"uncertainty\": 0,\n      \"failure_category\": \"policy\"\n    }\n  ]\n}",
+            "parsed": {
+              "items": [
+                {
+                  "requirement_id": "I1",
+                  "verdict": "FAIL",
+                  "node_ids": [
+                    "create"
+                  ],
+                  "edge_refs": [],
+                  "trace_refs": [
+                    "complete"
+                  ],
+                  "reason": "Execution INVALID: [{'code': 'POLICY_GUARD', 'category': 'policy', 'node_id': 'create', 'message': 'valid_before_create'}]",
+                  "uncertainty": 0,
+                  "failure_category": "policy"
+                }
+              ]
+            },
+            "validation_errors": [],
+            "prompt_tokens": 1712,
+            "completion_tokens": 109,
+            "status": "OK",
+            "server_total_duration_ns": 46409747826,
+            "done_reason": "stop",
+            "latency_ms": 46411.14377900158
+          }
+        ],
+        "status": "OK",
+        "doctor": {
+          "status": "READY",
+          "server_available": true,
+          "requested_model": "qwen3:4b",
+          "installed_models": [
+            {
+              "name": "qwen3:4b",
+              "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+              "size": 2497293931,
+              "details": {
+                "parent_model": "",
+                "format": "gguf",
+                "family": "qwen3",
+                "families": [
+                  "qwen3"
+                ],
+                "parameter_size": "4.0B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 262144,
+                "embedding_length": 2560,
+                "runner": "ggml"
+              }
+            },
+            {
+              "name": "qwen3:8b",
+              "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+              "size": 5225388164,
+              "details": {
+                "parent_model": "",
+                "format": "gguf",
+                "family": "qwen3",
+                "families": [
+                  "qwen3"
+                ],
+                "parameter_size": "8.2B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 40960,
+                "embedding_length": 4096,
+                "runner": "ggml"
+              }
+            },
+            {
+              "name": "qwen3.5:9b",
+              "digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+              "size": 6550825550,
+              "details": {
+                "parent_model": "model.gguf",
+                "format": "gguf",
+                "family": "qwen35",
+                "families": [
+                  "qwen35"
+                ],
+                "parameter_size": "9.0B",
+                "quantization_level": "Q4_K_M",
+                "context_length": 262144,
+                "embedding_length": 4096,
+                "runner": "llamacpp"
+              }
+            }
+          ],
+          "selected_model": {
+            "name": "qwen3:4b",
+            "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+            "size": 2497293931,
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M",
+              "context_length": 262144,
+              "embedding_length": 2560,
+              "runner": "ggml"
+            }
+          },
+          "elapsed_ms": 3.8299320003716275,
+          "error": null
+        },
+        "request_id": "1cd998dd06224c74a9eae5a95c1b679a",
+        "started_at": "2026-11-20T07:44:11.624714+00:00",
+        "request_record": "/home/ltp/Code/Graduation/Demo-Agent/outputs/cache/requests/1cd998dd06224c74a9eae5a95c1b679a.json",
+        "first_pass_status": "OK"
+      }
+    ],
+    "elapsed_ms": 46417.43291199964,
+    "prompt_tokens": 1712,
+    "completion_tokens": 109,
+    "scope": "all",
+    "same_model_bias": "Same-model judges are correlated; multiple calls/models do not establish independence.",
+    "agreement": {
+      "eligible_items": 0,
+      "agree": 0,
+      "basis": "Independent deterministic fixture/checklist labels; semantic items lack independent human labels."
+    }
+  }
+}

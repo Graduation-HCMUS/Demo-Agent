@@ -1,0 +1,9 @@
+{
+  "status": "UNAVAILABLE",
+  "server_available": false,
+  "requested_model": "qwen3.5:9b",
+  "installed_models": [],
+  "selected_model": null,
+  "elapsed_ms": 9.687558998848544,
+  "error": "<urlopen error [Errno 1] Operation not permitted>"
+}

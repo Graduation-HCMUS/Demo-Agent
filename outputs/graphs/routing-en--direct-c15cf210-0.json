@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "routing_workflow",
+  "name": "Classified Support Ticket Routing",
+  "nodes": [
+    {
+      "id": "input_high_risk",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "input_message",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "condition_high_risk",
+      "type": "condition",
+      "config": {
+        "field": "high_risk",
+        "operator": "eq",
+        "value": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "input_high_risk",
+      "target": "condition_high_risk",
+      "port": "next"
+    },
+    {
+      "source": "input_message",
+      "target": "condition_high_risk",
+      "port": "next"
+    },
+    {
+      "source": "condition_high_risk",
+      "target": "escalate",
+      "port": "true"
+    },
+    {
+      "source": "condition_high_risk",
+      "target": "route_standard",
+      "port": "false"
+    }
+  ]
+}

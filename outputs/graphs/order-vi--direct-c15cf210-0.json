@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "order_status_validation",
+  "name": "Order status validation workflow",
+  "nodes": [
+    {
+      "id": "input_order_number",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "input_email",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "input_order_attempts",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "input_email_attempts",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "input_mock_order",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "validate_order_number",
+      "type": "custom",
+      "config": {
+        "operation": "validate_fields",
+        "args": {
+          "fields": [
+            "order_number"
+          ],
+          "formats": {
+            "order_number": "order_number"
+          }
+        }
+      }
+    },
+    {
+      "id": "validate_email",
+      "type": "custom",
+      "config": {
+        "operation": "validate_fields",
+        "args": {
+          "fields": [
+            "email"
+          ],
+          "formats": {
+            "email": "email"
+          }
+        }
+      }
+    },
+    {
+      "id": "save_order",
+      "type": "custom",
+      "config": {
+        "operation": "save_order",
+        "args": {
+          "value": {
+            "ref": "validate_order_number"
+          }
+        }
+      }
+    },
+    {
+      "id": "save_email",
+      "type": "custom",
+      "config": {
+        "operation": "save_email",
+        "args": {
+          "value": {
+            "ref": "validate_email"
+          }
+        }
+      }
+    },
+    {
+      "id": "lookup_order",
+      "type": "custom",
+      "config": {
+        "operation": "lookup_order",
+        "args": {
+          "order": {
+            "ref": "save_order"
+          },
+          "email": {
+            "ref": "save_email"
+          }
+        }
+      }
+    },
+    {
+      "id": "reply_status",
+      "type": "custom",
+      "config": {
+        "operation": "reply_status",
+        "args": {
+          "value": {
+            "ref": "lookup_order"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "input_order_number",
+      "target": "validate_order_number",
+      "port": "next"
+    },
+    {
+      "source": "validate_order_number",
+      "target": "save_order",
+      "port": "next"
+    },
+    {
+      "source": "save_order",
+      "target": "validate_email",
+      "port": "next"
+    },
+    {
+      "source": "validate_email",
+      "target": "save_email",
+      "port": "next"
+    },
+    {
+      "source": "save_email",
+      "target": "lookup_order",
+      "port": "next"
+    },
+    {
+      "source": "lookup_order",
+      "target": "reply_status",
+      "port": "next"
+    }
+  ]
+}
