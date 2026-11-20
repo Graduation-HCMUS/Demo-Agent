@@ -1,0 +1,370 @@
+[
+  {
+    "source_id": "ZD-examples",
+    "title": "Examples of generative procedures for AI agents",
+    "publisher": "Zendesk / Erin O’Callaghan",
+    "url": "https://support.zendesk.com/hc/en-us/articles/9424547984026",
+    "source_type": "vendor example",
+    "publication_or_revision_date": "2026-06-15",
+    "relevant_section": "Order status; Damaged item",
+    "establishes": "Order example validates five-digit order numbers and email, escalates after two invalid entries, then checks status. Damaged-item example collects order/product/damage, asks for a photo and submits a ticket for support follow-up.",
+    "limitations": "Illustrative company procedures, not universal Zendesk policy. Conversation wording and refund notification do not confer refund API authority.",
+    "used_by": [
+      "order",
+      "damage"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": [
+      "data/cases/damage-en.json",
+      "data/cases/order-en.json",
+      "data/cases/order-vi.json",
+      "data/glossary.json",
+      "data/sops/damage.json",
+      "data/sops/order.json"
+    ]
+  },
+  {
+    "source_id": "ZD-practices",
+    "title": "Best practices for writing generative procedures for AI agents",
+    "publisher": "Zendesk / Erin O’Callaghan",
+    "url": "https://support.zendesk.com/hc/en-us/articles/9424547622298",
+    "source_type": "vendor documentation",
+    "publication_or_revision_date": "2026-08-05",
+    "relevant_section": "Sequential order; conditions and actions; errors",
+    "establishes": "Recommends specific terminology, sequential steps, explicit conditions, and error handling.",
+    "limitations": "Its language-performance claim is not evidence about our model or Vietnamese translations.",
+    "used_by": [
+      "all SOP modeling"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "ZD-triggers",
+    "title": "Ticket trigger conditions and actions reference",
+    "publisher": "Zendesk",
+    "url": "https://support.zendesk.com/hc/en-us/articles/4408893545882-Ticket-trigger-conditions-and-actions-reference",
+    "source_type": "vendor documentation",
+    "publication_or_revision_date": null,
+    "relevant_section": "Ticket Group and Status conditions/actions",
+    "establishes": "Conditions can inspect ticket fields; actions can assign groups and update ticket attributes.",
+    "limitations": "Does not define our group names or risk classification rules. Not a complete trigger-engine simulation.",
+    "used_by": [
+      "routing",
+      "contracts"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": [
+      "data/glossary.json"
+    ]
+  },
+  {
+    "source_id": "ZD-planning",
+    "title": "Planning your workflow",
+    "publisher": "Zendesk / Lisa Kelly",
+    "url": "https://support.zendesk.com/hc/en-us/articles/4408827906202-Planning-your-workflow",
+    "source_type": "vendor documentation",
+    "publication_or_revision_date": "2026-05-01",
+    "relevant_section": "Groups; Roles; Ticket fields; Ticket forms",
+    "establishes": "Planning should identify roles, group purposes, ticket fields needed for routing and resolution, and required submission fields.",
+    "limitations": "Does not prescribe our required-field set.",
+    "used_by": [
+      "intake",
+      "SOP structure"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": [
+      "data/glossary.json"
+    ]
+  },
+  {
+    "source_id": "ZD-recipes",
+    "title": "Workflow recipes reference",
+    "publisher": "Zendesk",
+    "url": "https://support.zendesk.com/hc/en-us/articles/4408828320666-Workflow-recipes-reference",
+    "source_type": "vendor index",
+    "publication_or_revision_date": null,
+    "relevant_section": "Ticket updates and assignments; Processes",
+    "establishes": "Indexes request forms, escalation and approval workflow recipes.",
+    "limitations": "Index only; linked recipes were not inspected and supply no policy details here.",
+    "used_by": [
+      "context only"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "N8N-triage",
+    "title": "Triage and route AI-powered support tickets with Google Gemini, Trello, and Gmail",
+    "publisher": "n8n / Murilo Costa",
+    "url": "https://n8n.io/workflows/19465-triage-and-route-ai-powered-support-tickets-with-google-gemini-trello-and-gmail/",
+    "source_type": "published template description",
+    "publication_or_revision_date": null,
+    "relevant_section": "Quick overview; How it works steps 1–7",
+    "establishes": "Stops out-of-scope requests; creates a card; asks a human to approve the proposed reply; approved replies are sent and cards resolved; rejected cards go to Manual Review.",
+    "limitations": "Description inspected, full n8n JSON not retrieved. Priority classification and integrations omitted. Relative update date not converted.",
+    "used_by": [
+      "approval"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": [
+      "data/cases/approval-en.json",
+      "data/cases/approval-vi.json",
+      "data/glossary.json",
+      "data/sops/approval.json"
+    ]
+  },
+  {
+    "source_id": "N8N-routing",
+    "title": "Route and respond to support tickets with Google Sheets, Slack, and Gemini",
+    "publisher": "n8n / Ciphernutz IT Services",
+    "url": "https://n8n.io/workflows/18499-route-and-respond-to-support-tickets-with-google-sheets-slack-and-gemini/",
+    "source_type": "published template description",
+    "publication_or_revision_date": null,
+    "relevant_section": "How it works steps 1–8",
+    "establishes": "Validates required fields, rejects invalid payloads, routes high-risk cases to human escalation and records interactions.",
+    "limitations": "No universal routing thresholds. Deduplication, retrieval, daily reporting and actual integrations omitted. Full JSON not retrieved.",
+    "used_by": [
+      "intake",
+      "routing"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": [
+      "data/cases/intake-en.json",
+      "data/cases/routing-en.json",
+      "data/sops/intake.json",
+      "data/sops/routing.json"
+    ]
+  },
+  {
+    "source_id": "BPMN",
+    "title": "Business Process Model & Notation",
+    "publisher": "OMG",
+    "url": "https://www.omg.org/bpmn/",
+    "source_type": "standards overview",
+    "publication_or_revision_date": null,
+    "relevant_section": "Graphical notations for business processes",
+    "establishes": "Process diagrams connect business process design to implementation.",
+    "limitations": "Overview only. Genie DSL is neither BPMN compliant nor BPMN XML.",
+    "used_by": [
+      "DSL",
+      "SOP modeling"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "DMN",
+    "title": "Decision Model and Notation",
+    "publisher": "OMG",
+    "url": "https://www.omg.org/dmn/",
+    "source_type": "standards overview",
+    "publication_or_revision_date": null,
+    "relevant_section": "Precise specification of business decisions and business rules",
+    "establishes": "Explicit decisions and business rules complement process models.",
+    "limitations": "No DMN/FEEL interpreter or conformance claim.",
+    "used_by": [
+      "condition modeling"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "tau",
+    "title": "τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains",
+    "publisher": "Shunyu Yao et al.",
+    "url": "https://arxiv.org/abs/2406.12045",
+    "source_type": "research preprint",
+    "publication_or_revision_date": "2024-06-17",
+    "relevant_section": "Abstract",
+    "establishes": "Evaluates policy-guided tool agents through final database state compared with annotated goals; studies repeated-trial reliability.",
+    "limitations": "Abstract read, no dataset reused; our snapshot runner is not τ-bench or pass^k replication.",
+    "used_by": [
+      "scenario evaluator"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "judge",
+    "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+    "publisher": "Lianmin Zheng et al.",
+    "url": "https://arxiv.org/abs/2306.05685",
+    "source_type": "NeurIPS 2023 paper landing/abstract",
+    "publication_or_revision_date": "2023-12-24",
+    "relevant_section": "Abstract",
+    "establishes": "Studies LLM judging and position, verbosity, self-enhancement and reasoning limitations.",
+    "limitations": "Human preference evaluation does not establish workflow correctness. No published scores transferred.",
+    "used_by": [
+      "judge",
+      "same-model bias"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "geval",
+    "title": "G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment",
+    "publisher": "Yang Liu et al. / ACL",
+    "url": "https://aclanthology.org/2023.emnlp-main.153/",
+    "source_type": "EMNLP 2023 paper landing/abstract",
+    "publication_or_revision_date": "2023-12",
+    "relevant_section": "Abstract",
+    "establishes": "Studies structured form-based LLM evaluation of summarization/dialogue and possible preference for generated text.",
+    "limitations": "Our short evidence rubric is an adaptation, not G-Eval reproduction or hidden chain-of-thought collection.",
+    "used_by": [
+      "rubric judge"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "survey",
+    "title": "A Survey on LLM-as-a-Judge",
+    "publisher": "Jiawei Gu et al.",
+    "url": "https://arxiv.org/abs/2411.15594",
+    "source_type": "research survey landing/abstract",
+    "publication_or_revision_date": "2025-10-19",
+    "relevant_section": "Abstract",
+    "establishes": "Reviews judge reliability, consistency and bias mitigation.",
+    "limitations": "Only abstract/metadata inspected; no exhaustive literature review or claimed workflow benchmark results.",
+    "used_by": [
+      "judge limitations"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "WorkflowJudge",
+    "title": "WorkflowJudge (title supplied by user; unverified)",
+    "publisher": "UNVERIFIED",
+    "url": "https://doi.org/10.1109/AIBDF67964.2025.11440748",
+    "source_type": "unverified DOI",
+    "publication_or_revision_date": null,
+    "relevant_section": "Unavailable",
+    "establishes": "No substantive claim established.",
+    "limitations": "Firecrawl retrieval failed; exact title/DOI search returned no results. Not used to ground a method or business rule.",
+    "used_by": [
+      "provenance gap"
+    ],
+    "source_classification": "UNVERIFIED",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "unavailable",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "ollama-structured",
+    "title": "Structured outputs",
+    "publisher": "Ollama",
+    "url": "https://docs.ollama.com/capabilities/structured-outputs",
+    "source_type": "official documentation",
+    "publication_or_revision_date": null,
+    "relevant_section": "Generating structured JSON with a schema; Tips",
+    "establishes": "Pass JSON Schema in format, include schema in prompt, validate output and use low temperature.",
+    "limitations": "Schema constrains shape, not semantics. Local HTTP adapter chosen to avoid dependencies.",
+    "used_by": [
+      "generator",
+      "judge"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "qwen35",
+    "title": "qwen3.5:9b",
+    "publisher": "Ollama model library",
+    "url": "https://ollama.com/library/qwen3.5:9b",
+    "source_type": "model listing",
+    "publication_or_revision_date": null,
+    "relevant_section": "Details",
+    "establishes": "Requested model tag is listed.",
+    "limitations": "Listing is not installed-model evidence or hardware sizing advice. No published model scores reused.",
+    "used_by": [
+      "default model"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  },
+  {
+    "source_id": "qwen3",
+    "title": "qwen3:8b",
+    "publisher": "Ollama model library",
+    "url": "https://ollama.com/library/qwen3:8b",
+    "source_type": "model listing",
+    "publication_or_revision_date": null,
+    "relevant_section": "Details",
+    "establishes": "Alternative model tag is listed.",
+    "limitations": "Tag/quantization/memory needs can change. No local model installed during initial inspection.",
+    "used_by": [
+      "alternative model"
+    ],
+    "source_classification": "SOURCE_FACT",
+    "artifact_classification": "SOURCE_ADAPTATION",
+    "access_status": "retrieved",
+    "accessed_on": "2026-11-20",
+    "retrieval": "Firecrawl",
+    "artifact_uses": []
+  }
+]

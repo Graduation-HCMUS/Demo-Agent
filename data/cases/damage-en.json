@@ -1,0 +1,183 @@
+{
+  "case_id": "damage-en",
+  "source_ids": [
+    "ZD-examples"
+  ],
+  "language": "en",
+  "prompt_id": "damage-en",
+  "user_request_file": "../prompts.json",
+  "sop_id": "damage",
+  "requirements": [
+    {
+      "requirement_id": "D1",
+      "description": "Collect valid order/product/damage details, ask for optional photo, create ticket and hand off",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "validate_fields",
+        "save_order",
+        "notify",
+        "create_ticket",
+        "escalate"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    },
+    {
+      "requirement_id": "D2",
+      "description": "Express empathy and thank the customer in suitable wording",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "severity": "minor",
+      "evaluation_method": "semantic",
+      "expected_evidence": "Review message intent and tone against request; symbolic templates alone are insufficient",
+      "operations": [],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "expected_capabilities": [
+    "create_ticket",
+    "escalate",
+    "notify",
+    "save_order",
+    "validate_fields"
+  ],
+  "input_fixtures": [
+    {
+      "fixture_id": "complete",
+      "input": {
+        "order_number": "12345",
+        "order_attempts": 0,
+        "product": "Mug",
+        "damage_description": "Cracked"
+      },
+      "expected_state": {
+        "ticket_created": true,
+        "group": "human_support",
+        "notice": "thanks"
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "save_order",
+          "create_ticket",
+          "escalate"
+        ],
+        "action_order": [
+          [
+            "create_ticket",
+            "escalate"
+          ]
+        ],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "issue_refund"
+      ]
+    },
+    {
+      "fixture_id": "missing",
+      "input": {
+        "order_number": "12345",
+        "order_attempts": 0,
+        "product": "",
+        "damage_description": ""
+      },
+      "expected_state": {
+        "requested_fields": [
+          "product",
+          "damage_description"
+        ]
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "request_info"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "create_ticket"
+      ]
+    },
+    {
+      "fixture_id": "bad_twice",
+      "input": {
+        "order_number": "no",
+        "order_attempts": 2,
+        "product": "Mug",
+        "damage_description": "Cracked"
+      },
+      "expected_state": {
+        "group": "human_support"
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "escalate"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "create_ticket"
+      ]
+    }
+  ],
+  "expected_state": "Per-fixture expected_state (subset, not exact state equality)",
+  "expected_trace_constraints": "Per-fixture constraints plus shared constraints below",
+  "forbidden_effects": [
+    "issue_refund"
+  ],
+  "metamorphic_relations": [
+    {
+      "relation_id": "details_added",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "base_input": {
+        "order_number": "12345",
+        "order_attempts": 0,
+        "product": "",
+        "damage_description": ""
+      },
+      "changed_fields": {
+        "product": "Mug",
+        "damage_description": "Cracked"
+      },
+      "expected_base": {
+        "requested_fields": [
+          "product",
+          "damage_description"
+        ]
+      },
+      "expected_changed": {
+        "ticket_created": true,
+        "group": "human_support"
+      },
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "provenance": {
+    "classification": "SOURCE_ADAPTATION",
+    "fixtures": "Independently designed synthetic snapshots, not vendor or benchmark data",
+    "translation": "English primary"
+  },
+  "limitations": [
+    "Tone and free-form language are not verified by matching template IDs.",
+    "No real ticket submission or elapsed-time simulation."
+  ],
+  "shared_trace_constraints": [
+    {
+      "when_action": "create_ticket",
+      "require_notice": "optional_photo_request"
+    },
+    {
+      "when_action": "escalate",
+      "when_ticket_created": true,
+      "require_notice": "next_steps_3_to_5_business_days"
+    }
+  ]
+}

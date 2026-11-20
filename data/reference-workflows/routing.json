@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "reference-routing",
+  "name": "Source-derived routing",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "risk",
+      "type": "condition",
+      "config": {
+        "field": "high_risk",
+        "operator": "eq",
+        "value": true
+      }
+    },
+    {
+      "id": "human",
+      "type": "custom",
+      "config": {
+        "operation": "escalate",
+        "args": {
+          "group": "human_support"
+        }
+      }
+    },
+    {
+      "id": "ordinary",
+      "type": "custom",
+      "config": {
+        "operation": "route",
+        "args": {
+          "group": "standard_support"
+        }
+      }
+    },
+    {
+      "id": "log",
+      "type": "custom",
+      "config": {
+        "operation": "log_ticket",
+        "args": {}
+      }
+    },
+    {
+      "id": "out",
+      "type": "output",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "in",
+      "target": "risk",
+      "port": "next"
+    },
+    {
+      "source": "risk",
+      "target": "human",
+      "port": "true"
+    },
+    {
+      "source": "risk",
+      "target": "ordinary",
+      "port": "false"
+    },
+    {
+      "source": "human",
+      "target": "log",
+      "port": "next"
+    },
+    {
+      "source": "ordinary",
+      "target": "log",
+      "port": "next"
+    },
+    {
+      "source": "log",
+      "target": "out",
+      "port": "next"
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "case_id": "intake-en",
+  "source_ids": [
+    "N8N-routing"
+  ],
+  "language": "en",
+  "prompt_id": "intake-en",
+  "user_request_file": "../prompts.json",
+  "sop_id": "intake",
+  "requirements": [
+    {
+      "requirement_id": "I1",
+      "description": "Reject incomplete intake and create only complete tickets",
+      "source_ids": [
+        "N8N-routing"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "validate_fields",
+        "create_ticket",
+        "request_info"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "expected_capabilities": [
+    "create_ticket",
+    "request_info",
+    "validate_fields"
+  ],
+  "input_fixtures": [
+    {
+      "fixture_id": "complete",
+      "input": {
+        "email": "user@example.test",
+        "message": "help"
+      },
+      "expected_state": {
+        "ticket_created": true
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "create_ticket"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "request_info"
+      ]
+    },
+    {
+      "fixture_id": "missing",
+      "input": {
+        "email": "",
+        "message": "help"
+      },
+      "expected_state": {
+        "status": 400
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "request_info"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "create_ticket"
+      ]
+    }
+  ],
+  "expected_state": "Per-fixture expected_state (subset, not exact state equality)",
+  "expected_trace_constraints": "Per-fixture constraints plus shared constraints below",
+  "forbidden_effects": [
+    "issue_refund"
+  ],
+  "metamorphic_relations": [
+    {
+      "relation_id": "email_added",
+      "source_ids": [
+        "N8N-routing"
+      ],
+      "base_input": {
+        "email": "",
+        "message": "help"
+      },
+      "changed_fields": {
+        "email": "other@example.test"
+      },
+      "expected_base": {
+        "status": 400
+      },
+      "expected_changed": {
+        "ticket_created": true
+      },
+      "provenance": "SOURCE_ADAPTATION"
+    },
+    {
+      "relation_id": "message_added",
+      "source_ids": [
+        "N8N-routing"
+      ],
+      "base_input": {
+        "email": "a@example.test",
+        "message": ""
+      },
+      "changed_fields": {
+        "message": "details"
+      },
+      "expected_base": {
+        "status": 400
+      },
+      "expected_changed": {
+        "ticket_created": true
+      },
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "provenance": {
+    "classification": "SOURCE_ADAPTATION",
+    "fixtures": "Independently designed synthetic snapshots, not vendor or benchmark data",
+    "translation": "English primary"
+  },
+  "limitations": [
+    "No deduplication, real HTTP response or live integration."
+  ],
+  "shared_trace_constraints": []
+}

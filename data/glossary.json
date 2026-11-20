@@ -1,0 +1,110 @@
+[
+  {
+    "canonical_term": "ticket",
+    "english_aliases": [
+      "ticket",
+      "support request"
+    ],
+    "vietnamese_aliases": [
+      "phiếu hỗ trợ",
+      "yêu cầu hỗ trợ"
+    ],
+    "related_capabilities": [
+      "create_ticket"
+    ],
+    "source_ids": [
+      "ZD-triggers"
+    ],
+    "matching_limitations": "Substring/operation coverage only; ignores arguments, branches, negation and ordering."
+  },
+  {
+    "canonical_term": "escalation",
+    "english_aliases": [
+      "escalate",
+      "human"
+    ],
+    "vietnamese_aliases": [
+      "chuyển cấp",
+      "con người"
+    ],
+    "related_capabilities": [
+      "escalate"
+    ],
+    "source_ids": [
+      "ZD-examples"
+    ],
+    "matching_limitations": "Substring/operation coverage only; ignores arguments, branches, negation and ordering."
+  },
+  {
+    "canonical_term": "approval",
+    "english_aliases": [
+      "approval",
+      "approved"
+    ],
+    "vietnamese_aliases": [
+      "phê duyệt"
+    ],
+    "related_capabilities": [
+      "request_approval"
+    ],
+    "source_ids": [
+      "N8N-triage"
+    ],
+    "matching_limitations": "Substring/operation coverage only; ignores arguments, branches, negation and ordering."
+  },
+  {
+    "canonical_term": "routing",
+    "english_aliases": [
+      "route",
+      "group"
+    ],
+    "vietnamese_aliases": [
+      "định tuyến",
+      "nhóm"
+    ],
+    "related_capabilities": [
+      "route"
+    ],
+    "source_ids": [
+      "ZD-triggers"
+    ],
+    "matching_limitations": "Substring/operation coverage only; ignores arguments, branches, negation and ordering."
+  },
+  {
+    "canonical_term": "order status",
+    "english_aliases": [
+      "order",
+      "status"
+    ],
+    "vietnamese_aliases": [
+      "đơn hàng",
+      "trạng thái"
+    ],
+    "related_capabilities": [
+      "lookup_order",
+      "reply_status"
+    ],
+    "source_ids": [
+      "ZD-examples"
+    ],
+    "matching_limitations": "Substring/operation coverage only; ignores arguments, branches, negation and ordering."
+  },
+  {
+    "canonical_term": "validation",
+    "english_aliases": [
+      "validate",
+      "required"
+    ],
+    "vietnamese_aliases": [
+      "kiểm tra",
+      "bắt buộc"
+    ],
+    "related_capabilities": [
+      "validate_fields"
+    ],
+    "source_ids": [
+      "ZD-planning"
+    ],
+    "matching_limitations": "Substring/operation coverage only; ignores arguments, branches, negation and ordering."
+  }
+]

@@ -1,0 +1,124 @@
+{
+  "sop_id": "order",
+  "source_ids": [
+    "ZD-examples"
+  ],
+  "provenance": "SOURCE_ADAPTATION",
+  "scope": "Order detail validation, status lookup and status response",
+  "purpose": "Order detail validation, status lookup and status response",
+  "trigger": "Customer asks for order status",
+  "inputs": {
+    "order_number": "Optional field (may be missing), named in local snapshot contract",
+    "email": "Optional field (may be missing), named in local snapshot contract",
+    "order_attempts": "Optional field (may be missing), named in local snapshot contract",
+    "email_attempts": "Optional field (may be missing), named in local snapshot contract",
+    "mock_order": "Optional field (may be missing), named in local snapshot contract"
+  },
+  "required_fields": [
+    "order_number",
+    "email",
+    "order_attempts",
+    "email_attempts",
+    "mock_order"
+  ],
+  "roles": [
+    "customer",
+    "human support"
+  ],
+  "preconditions": [
+    "Single ticket snapshot; declared input fields may be absent; counters/flags trusted"
+  ],
+  "ordered_activities": [
+    "Acknowledge status request",
+    "Validate five-digit order number; request correction or escalate after two invalid attempts",
+    "Save valid order number",
+    "Validate email; request correction or escalate after two invalid attempts",
+    "Save email, look up status, report status/courier/date/tracking if supplied"
+  ],
+  "decision_conditions": [
+    "valid order number",
+    "order_attempts >= 2",
+    "valid email",
+    "email_attempts >= 2"
+  ],
+  "actions": [
+    "Acknowledge status request",
+    "Validate five-digit order number; request correction or escalate after two invalid attempts",
+    "Save valid order number",
+    "Validate email; request correction or escalate after two invalid attempts",
+    "Save email, look up status, report status/courier/date/tracking if supplied"
+  ],
+  "exceptions_and_escalation": "See conditional activities; no external side effects",
+  "expected_outputs": [
+    "Local ticket state and operation trace"
+  ],
+  "forbidden_actions": [
+    {
+      "policy_id": "no_refund",
+      "kind": "forbid_operation",
+      "operation": "issue_refund",
+      "provenance": "EXPERIMENTAL_ASSUMPTION",
+      "reason": "Local simulator has no authority to transfer money; vendor example mentions a refund notification only."
+    }
+  ],
+  "postconditions": [
+    "Independent case assertions hold on supported fixtures"
+  ],
+  "source_backed_requirements": [
+    {
+      "requirement_id": "O1",
+      "description": "Validate and save order/email before lookup; invalid input requests correction or escalates at two attempts",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "validate_fields",
+        "save_order",
+        "save_email",
+        "lookup_order",
+        "request_info",
+        "escalate"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    },
+    {
+      "requirement_id": "O2",
+      "description": "Report retrieved status including cancellation notice without executing a refund",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "reply_status"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    },
+    {
+      "requirement_id": "O3",
+      "description": "Acknowledge customer intent clearly in the customer-facing wording",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "severity": "minor",
+      "evaluation_method": "semantic",
+      "expected_evidence": "Review message intent and tone against request; symbolic templates alone are insufficient",
+      "operations": [],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "simulation_assumptions": [
+    "One snapshot per run; attempt counters come from the conversation caller, not a loop.",
+    "Email uses a simple local format check, not RFC-complete validation.",
+    "mock_order is a synthetic trusted lookup response.",
+    "Reply is a structured status object; cancellation notice is informational and never issues a refund."
+  ],
+  "limitations": [
+    "Does not simulate every conversational turn or exact customer wording.",
+    "Company delivery-time example omitted from this bounded status slice."
+  ]
+}

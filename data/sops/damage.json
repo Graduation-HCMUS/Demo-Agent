@@ -1,0 +1,107 @@
+{
+  "sop_id": "damage",
+  "source_ids": [
+    "ZD-examples"
+  ],
+  "provenance": "SOURCE_ADAPTATION",
+  "scope": "Damaged-item detail collection and human support handoff",
+  "purpose": "Damaged-item detail collection and human support handoff",
+  "trigger": "Customer reports damaged item",
+  "inputs": {
+    "order_number": "Optional field (may be missing), named in local snapshot contract",
+    "order_attempts": "Optional field (may be missing), named in local snapshot contract",
+    "product": "Optional field (may be missing), named in local snapshot contract",
+    "damage_description": "Optional field (may be missing), named in local snapshot contract"
+  },
+  "required_fields": [
+    "order_number",
+    "order_attempts",
+    "product",
+    "damage_description"
+  ],
+  "roles": [
+    "customer",
+    "human support"
+  ],
+  "preconditions": [
+    "Single ticket snapshot; declared input fields may be absent; counters/flags trusted"
+  ],
+  "ordered_activities": [
+    "Acknowledge damage with empathy",
+    "Validate five-digit order; request correction or escalate after two invalid attempts",
+    "Save order; gather product and damage description",
+    "If details missing request them",
+    "Ask for optional photo without blocking handoff",
+    "Create ticket; inform support follow-up in 3–5 business days; escalate; thank customer"
+  ],
+  "decision_conditions": [
+    "valid order",
+    "order_attempts >= 2",
+    "complete product/damage fields"
+  ],
+  "actions": [
+    "Acknowledge damage with empathy",
+    "Validate five-digit order; request correction or escalate after two invalid attempts",
+    "Save order; gather product and damage description",
+    "If details missing request them",
+    "Ask for optional photo without blocking handoff",
+    "Create ticket; inform support follow-up in 3–5 business days; escalate; thank customer"
+  ],
+  "exceptions_and_escalation": "See conditional activities; no external side effects",
+  "expected_outputs": [
+    "Local ticket state and operation trace"
+  ],
+  "forbidden_actions": [
+    {
+      "policy_id": "no_refund",
+      "kind": "forbid_operation",
+      "operation": "issue_refund",
+      "provenance": "EXPERIMENTAL_ASSUMPTION",
+      "reason": "Local simulator has no authority to transfer money; vendor example mentions a refund notification only."
+    }
+  ],
+  "postconditions": [
+    "Independent case assertions hold on supported fixtures"
+  ],
+  "source_backed_requirements": [
+    {
+      "requirement_id": "D1",
+      "description": "Collect valid order/product/damage details, ask for optional photo, create ticket and hand off",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "validate_fields",
+        "save_order",
+        "notify",
+        "create_ticket",
+        "escalate"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    },
+    {
+      "requirement_id": "D2",
+      "description": "Express empathy and thank the customer in suitable wording",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "severity": "minor",
+      "evaluation_method": "semantic",
+      "expected_evidence": "Review message intent and tone against request; symbolic templates alone are insufficient",
+      "operations": [],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "simulation_assumptions": [
+    "Photo request is a symbolic notification; no file bytes or file-processing capability.",
+    "Missing details suspend this snapshot; a later call supplies completed data.",
+    "Handoff group human_support is local naming."
+  ],
+  "limitations": [
+    "Tone and free-form language are not verified by matching template IDs.",
+    "No real ticket submission or elapsed-time simulation."
+  ]
+}

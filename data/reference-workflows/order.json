@@ -1,0 +1,277 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "reference-order",
+  "name": "Source-derived order",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "ack",
+      "type": "custom",
+      "config": {
+        "operation": "notify",
+        "args": {
+          "template": "order_ack"
+        }
+      }
+    },
+    {
+      "id": "validate_order",
+      "type": "custom",
+      "config": {
+        "operation": "validate_fields",
+        "args": {
+          "fields": [
+            "order_number"
+          ],
+          "formats": {
+            "order_number": "order_number"
+          }
+        }
+      }
+    },
+    {
+      "id": "order_valid",
+      "type": "condition",
+      "config": {
+        "field": "valid",
+        "operator": "eq",
+        "value": true
+      }
+    },
+    {
+      "id": "order_twice",
+      "type": "condition",
+      "config": {
+        "field": "order_attempts",
+        "operator": "gte",
+        "value": 2
+      }
+    },
+    {
+      "id": "ask_order",
+      "type": "custom",
+      "config": {
+        "operation": "request_info",
+        "args": {
+          "fields": [
+            "order_number"
+          ],
+          "status": 200
+        }
+      }
+    },
+    {
+      "id": "human",
+      "type": "custom",
+      "config": {
+        "operation": "escalate",
+        "args": {
+          "group": "human_support"
+        }
+      }
+    },
+    {
+      "id": "save_order",
+      "type": "custom",
+      "config": {
+        "operation": "save_order",
+        "args": {
+          "value": {
+            "ref": "order_number"
+          }
+        }
+      }
+    },
+    {
+      "id": "validate_email",
+      "type": "custom",
+      "config": {
+        "operation": "validate_fields",
+        "args": {
+          "fields": [
+            "email"
+          ],
+          "formats": {
+            "email": "email"
+          }
+        }
+      }
+    },
+    {
+      "id": "email_valid",
+      "type": "condition",
+      "config": {
+        "field": "valid",
+        "operator": "eq",
+        "value": true
+      }
+    },
+    {
+      "id": "email_twice",
+      "type": "condition",
+      "config": {
+        "field": "email_attempts",
+        "operator": "gte",
+        "value": 2
+      }
+    },
+    {
+      "id": "ask_email",
+      "type": "custom",
+      "config": {
+        "operation": "request_info",
+        "args": {
+          "fields": [
+            "email"
+          ],
+          "status": 200
+        }
+      }
+    },
+    {
+      "id": "save_email",
+      "type": "custom",
+      "config": {
+        "operation": "save_email",
+        "args": {
+          "value": {
+            "ref": "email"
+          }
+        }
+      }
+    },
+    {
+      "id": "lookup",
+      "type": "custom",
+      "config": {
+        "operation": "lookup_order",
+        "args": {
+          "order": {
+            "ref": "saved_order"
+          },
+          "email": {
+            "ref": "saved_email"
+          }
+        }
+      }
+    },
+    {
+      "id": "reply",
+      "type": "custom",
+      "config": {
+        "operation": "reply_status",
+        "args": {
+          "value": {
+            "ref": "order_status"
+          }
+        }
+      }
+    },
+    {
+      "id": "out",
+      "type": "output",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "in",
+      "target": "ack",
+      "port": "next"
+    },
+    {
+      "source": "ack",
+      "target": "validate_order",
+      "port": "next"
+    },
+    {
+      "source": "validate_order",
+      "target": "order_valid",
+      "port": "next"
+    },
+    {
+      "source": "order_valid",
+      "target": "save_order",
+      "port": "true"
+    },
+    {
+      "source": "order_valid",
+      "target": "order_twice",
+      "port": "false"
+    },
+    {
+      "source": "order_twice",
+      "target": "human",
+      "port": "true"
+    },
+    {
+      "source": "order_twice",
+      "target": "ask_order",
+      "port": "false"
+    },
+    {
+      "source": "human",
+      "target": "out",
+      "port": "next"
+    },
+    {
+      "source": "ask_order",
+      "target": "out",
+      "port": "next"
+    },
+    {
+      "source": "save_order",
+      "target": "validate_email",
+      "port": "next"
+    },
+    {
+      "source": "validate_email",
+      "target": "email_valid",
+      "port": "next"
+    },
+    {
+      "source": "email_valid",
+      "target": "save_email",
+      "port": "true"
+    },
+    {
+      "source": "email_valid",
+      "target": "email_twice",
+      "port": "false"
+    },
+    {
+      "source": "email_twice",
+      "target": "human",
+      "port": "true"
+    },
+    {
+      "source": "email_twice",
+      "target": "ask_email",
+      "port": "false"
+    },
+    {
+      "source": "ask_email",
+      "target": "out",
+      "port": "next"
+    },
+    {
+      "source": "save_email",
+      "target": "lookup",
+      "port": "next"
+    },
+    {
+      "source": "lookup",
+      "target": "reply",
+      "port": "next"
+    },
+    {
+      "source": "reply",
+      "target": "out",
+      "port": "next"
+    }
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "case_id": "order-en",
+  "source_ids": [
+    "ZD-examples"
+  ],
+  "language": "en",
+  "prompt_id": "order-en",
+  "user_request_file": "../prompts.json",
+  "sop_id": "order",
+  "requirements": [
+    {
+      "requirement_id": "O1",
+      "description": "Validate and save order/email before lookup; invalid input requests correction or escalates at two attempts",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "validate_fields",
+        "save_order",
+        "save_email",
+        "lookup_order",
+        "request_info",
+        "escalate"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    },
+    {
+      "requirement_id": "O2",
+      "description": "Report retrieved status including cancellation notice without executing a refund",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "reply_status"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    },
+    {
+      "requirement_id": "O3",
+      "description": "Acknowledge customer intent clearly in the customer-facing wording",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "severity": "minor",
+      "evaluation_method": "semantic",
+      "expected_evidence": "Review message intent and tone against request; symbolic templates alone are insufficient",
+      "operations": [],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "expected_capabilities": [
+    "escalate",
+    "lookup_order",
+    "reply_status",
+    "request_info",
+    "save_email",
+    "save_order",
+    "validate_fields"
+  ],
+  "input_fixtures": [
+    {
+      "fixture_id": "valid",
+      "input": {
+        "order_number": "12345",
+        "email": "u@example.test",
+        "order_attempts": 0,
+        "email_attempts": 0,
+        "mock_order": {
+          "status": "shipped",
+          "courier": "Demo courier",
+          "estimated_date": "2026-12-01",
+          "tracking_url": "https://example.test/t/1"
+        }
+      },
+      "expected_state": {
+        "saved_order": "12345",
+        "saved_email": "u@example.test",
+        "status_reply": {
+          "status": "shipped",
+          "courier": "Demo courier"
+        }
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "save_order",
+          "save_email",
+          "lookup_order",
+          "reply_status"
+        ],
+        "action_order": [
+          [
+            "save_order",
+            "lookup_order"
+          ],
+          [
+            "save_email",
+            "lookup_order"
+          ],
+          [
+            "lookup_order",
+            "reply_status"
+          ]
+        ],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "request_info",
+        "escalate"
+      ]
+    },
+    {
+      "fixture_id": "bad_once",
+      "input": {
+        "order_number": "x",
+        "email": "u@example.test",
+        "order_attempts": 1,
+        "email_attempts": 0,
+        "mock_order": {}
+      },
+      "expected_state": {
+        "requested_fields": [
+          "order_number"
+        ]
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "request_info"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "lookup_order"
+      ]
+    },
+    {
+      "fixture_id": "bad_twice",
+      "input": {
+        "order_number": "x",
+        "email": "u@example.test",
+        "order_attempts": 2,
+        "email_attempts": 0,
+        "mock_order": {}
+      },
+      "expected_state": {
+        "group": "human_support"
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "escalate"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "lookup_order",
+        "request_info"
+      ]
+    },
+    {
+      "fixture_id": "email_twice",
+      "input": {
+        "order_number": "12345",
+        "email": "bad",
+        "order_attempts": 0,
+        "email_attempts": 2,
+        "mock_order": {}
+      },
+      "expected_state": {
+        "group": "human_support"
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "save_order",
+          "escalate"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "lookup_order"
+      ]
+    },
+    {
+      "fixture_id": "cancelled",
+      "input": {
+        "order_number": "54321",
+        "email": "u@example.test",
+        "order_attempts": 0,
+        "email_attempts": 0,
+        "mock_order": {
+          "status": "cancelledByMerchant",
+          "courier": "",
+          "estimated_date": ""
+        }
+      },
+      "expected_state": {
+        "status_reply": {
+          "status": "cancelledByMerchant"
+        },
+        "cancellation_notice": true
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "reply_status"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "issue_refund"
+      ]
+    }
+  ],
+  "expected_state": "Per-fixture expected_state (subset, not exact state equality)",
+  "expected_trace_constraints": "Per-fixture constraints plus shared constraints below",
+  "forbidden_effects": [
+    "issue_refund"
+  ],
+  "metamorphic_relations": [
+    {
+      "relation_id": "order_corrected",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "base_input": {
+        "order_number": "bad",
+        "email": "u@example.test",
+        "order_attempts": 1,
+        "email_attempts": 0,
+        "mock_order": {
+          "status": "shipped"
+        }
+      },
+      "changed_fields": {
+        "order_number": "67890"
+      },
+      "expected_base": {
+        "requested_fields": [
+          "order_number"
+        ]
+      },
+      "expected_changed": {
+        "saved_order": "67890",
+        "status_reply": {
+          "status": "shipped"
+        }
+      },
+      "provenance": "SOURCE_ADAPTATION"
+    },
+    {
+      "relation_id": "email_corrected",
+      "source_ids": [
+        "ZD-examples"
+      ],
+      "base_input": {
+        "order_number": "12345",
+        "email": "bad",
+        "order_attempts": 0,
+        "email_attempts": 1,
+        "mock_order": {
+          "status": "shipped"
+        }
+      },
+      "changed_fields": {
+        "email": "a@example.test"
+      },
+      "expected_base": {
+        "requested_fields": [
+          "email"
+        ]
+      },
+      "expected_changed": {
+        "saved_email": "a@example.test",
+        "status_reply": {
+          "status": "shipped"
+        }
+      },
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "provenance": {
+    "classification": "SOURCE_ADAPTATION",
+    "fixtures": "Independently designed synthetic snapshots, not vendor or benchmark data",
+    "translation": "English primary"
+  },
+  "limitations": [
+    "Does not simulate every conversational turn or exact customer wording.",
+    "Company delivery-time example omitted from this bounded status slice."
+  ],
+  "shared_trace_constraints": []
+}

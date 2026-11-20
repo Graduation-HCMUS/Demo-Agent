@@ -1,0 +1,93 @@
+{
+  "sop_id": "routing",
+  "source_ids": [
+    "N8N-routing"
+  ],
+  "provenance": "SOURCE_ADAPTATION",
+  "scope": "Human escalation versus ordinary support routing slice",
+  "purpose": "Human escalation versus ordinary support routing slice",
+  "trigger": "A classified support request",
+  "inputs": {
+    "high_risk": "Optional field (may be missing), named in local snapshot contract",
+    "message": "Optional field (may be missing), named in local snapshot contract"
+  },
+  "required_fields": [
+    "high_risk",
+    "message"
+  ],
+  "roles": [
+    "customer",
+    "human support"
+  ],
+  "preconditions": [
+    "Single ticket snapshot; declared input fields may be absent; counters/flags trusted"
+  ],
+  "ordered_activities": [
+    "Inspect supplied high_risk flag",
+    "Escalate high risk to human_support; otherwise assign standard_support",
+    "Log interaction"
+  ],
+  "decision_conditions": [
+    "high_risk equals true"
+  ],
+  "actions": [
+    "Inspect supplied high_risk flag",
+    "Escalate high risk to human_support; otherwise assign standard_support",
+    "Log interaction"
+  ],
+  "exceptions_and_escalation": "See conditional activities; no external side effects",
+  "expected_outputs": [
+    "Local ticket state and operation trace"
+  ],
+  "forbidden_actions": [
+    {
+      "policy_id": "no_refund",
+      "kind": "forbid_operation",
+      "operation": "issue_refund",
+      "provenance": "EXPERIMENTAL_ASSUMPTION",
+      "reason": "Local simulator has no authority to transfer money; vendor example mentions a refund notification only."
+    },
+    {
+      "policy_id": "ordinary_when_not_high_risk",
+      "kind": "requires_state",
+      "operation": "route",
+      "when_args": {
+        "group": "standard_support"
+      },
+      "field": "high_risk",
+      "equals": false,
+      "source_ids": [
+        "N8N-routing"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "postconditions": [
+    "Independent case assertions hold on supported fixtures"
+  ],
+  "source_backed_requirements": [
+    {
+      "requirement_id": "R1",
+      "description": "High-risk tickets escalate to a human; ordinary tickets use ordinary support; record either outcome",
+      "source_ids": [
+        "N8N-routing"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "escalate",
+        "route",
+        "log_ticket"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "simulation_assumptions": [
+    "high_risk is a trusted precomputed boolean; no numerical threshold is invented.",
+    "human_support and standard_support are simulator group identifiers, not vendor policy names."
+  ],
+  "limitations": [
+    "No Gemini classification, Slack, deduplication, policy retrieval or daily summaries."
+  ]
+}

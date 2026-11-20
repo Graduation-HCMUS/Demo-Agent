@@ -1,0 +1,25 @@
+{
+  "created_before_generator": true,
+  "sha256": {
+    "data/cases/approval-en.json": "13fe114feb98a5113aab86459ed02b5956b4f1059998c7c77458b8d62268a9b0",
+    "data/cases/approval-vi.json": "7bc6cdc68e1dfe4496c81f27d42dd139a7dfe60087580b1ccd8b39b98484da12",
+    "data/cases/damage-en.json": "401479bc8b47fbb8e79910683eead20ae22692f432c3e489608efee901761df5",
+    "data/cases/intake-en.json": "b0485947dd62c600064f28f89dc63832ad65b2b48fe7c0d74d9c11031897cebc",
+    "data/cases/order-en.json": "1ae61d34cbcc5bf7511d1e1b4add8325b3921d78a80eed0989097685b6ce3119",
+    "data/cases/order-vi.json": "89662eb3e10ca4c924345836729173563bf605c357321852ae32d088895ff89d",
+    "data/cases/routing-en.json": "42792e8326d057ac3f2c4bbe6967981e3a46245291faf05d620d991337edbfb9",
+    "data/glossary.json": "6282f4942d333e638735ca86dd5d137f3ea50aa0db9087d55b45da7e4c00d764",
+    "data/prompts.json": "cb1a5acb3a1627e71e317cb55b4766f73eb916aeda9db88a67ab56d710254e42",
+    "data/reference-workflows/approval.json": "9fca1b95e7a5ea239ccbfc87bbe71d479ce9871c8a658cb89683e8a192adf78d",
+    "data/reference-workflows/damage.json": "2a62bb6223f9fc5f40e0645cb62f2003667bedd80081bb8b87790055b6912b73",
+    "data/reference-workflows/intake.json": "66a16e8e76b7e2328f4fb483cd9541ab293c4d5c6fe5cfe374bc249f0ba9e78b",
+    "data/reference-workflows/order.json": "16922d8c9064dfa8a587a1cf244b7a0c97876b021b08069ee336e1e90d79567e",
+    "data/reference-workflows/routing.json": "0fb45b30f9f5cde41991e2641a3b067ddaad977efb809fe03d9f4238c48b99d0",
+    "data/sops/approval.json": "592cea5253c9d71433735cb87cc3e58e773f082808972ab6f3f4bd46f044826e",
+    "data/sops/damage.json": "3ec968a5df3ece6ef3abbc34ce646ab4af91f98c1cf199893f3b900e67567790",
+    "data/sops/intake.json": "fd36abdb1cddf5d6c76b9c04ed8563dd279ca0de29bba51a0dbe97ac722514dd",
+    "data/sops/order.json": "9b44834b27e1e0a37fdc1ca8743b34d1da1e752c4d25e858d36df01a28f077c1",
+    "data/sops/routing.json": "7b5695c8b16cde99315404ee8fcbc04b9dc680ba84b934c91278b9fd9a8215bb",
+    "data/sources.json": "bdc52b70829d717bc14d6ecdf66ea9c4829d89f15491cfb47766e419a7db0d07"
+  }
+}

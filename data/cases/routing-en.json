@@ -1,0 +1,118 @@
+{
+  "case_id": "routing-en",
+  "source_ids": [
+    "N8N-routing"
+  ],
+  "language": "en",
+  "prompt_id": "routing-en",
+  "user_request_file": "../prompts.json",
+  "sop_id": "routing",
+  "requirements": [
+    {
+      "requirement_id": "R1",
+      "description": "High-risk tickets escalate to a human; ordinary tickets use ordinary support; record either outcome",
+      "source_ids": [
+        "N8N-routing"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "escalate",
+        "route",
+        "log_ticket"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "expected_capabilities": [
+    "escalate",
+    "log_ticket",
+    "route"
+  ],
+  "input_fixtures": [
+    {
+      "fixture_id": "ordinary",
+      "input": {
+        "high_risk": false,
+        "message": "help"
+      },
+      "expected_state": {
+        "group": "standard_support",
+        "logged": true
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "route",
+          "log_ticket"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "escalate"
+      ]
+    },
+    {
+      "fixture_id": "risk",
+      "input": {
+        "high_risk": true,
+        "message": "help"
+      },
+      "expected_state": {
+        "group": "human_support",
+        "logged": true
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "escalate",
+          "log_ticket"
+        ],
+        "action_order": [
+          [
+            "escalate",
+            "log_ticket"
+          ]
+        ],
+        "branches": {}
+      },
+      "forbidden_effects": []
+    }
+  ],
+  "expected_state": "Per-fixture expected_state (subset, not exact state equality)",
+  "expected_trace_constraints": "Per-fixture constraints plus shared constraints below",
+  "forbidden_effects": [
+    "issue_refund"
+  ],
+  "metamorphic_relations": [
+    {
+      "relation_id": "risk_flipped",
+      "source_ids": [
+        "N8N-routing"
+      ],
+      "base_input": {
+        "high_risk": false,
+        "message": "different wording"
+      },
+      "changed_fields": {
+        "high_risk": true
+      },
+      "expected_base": {
+        "group": "standard_support"
+      },
+      "expected_changed": {
+        "group": "human_support"
+      },
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "provenance": {
+    "classification": "SOURCE_ADAPTATION",
+    "fixtures": "Independently designed synthetic snapshots, not vendor or benchmark data",
+    "translation": "English primary"
+  },
+  "limitations": [
+    "No Gemini classification, Slack, deduplication, policy retrieval or daily summaries."
+  ],
+  "shared_trace_constraints": []
+}

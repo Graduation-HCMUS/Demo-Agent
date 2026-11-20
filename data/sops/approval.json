@@ -1,0 +1,101 @@
+{
+  "sop_id": "approval",
+  "source_ids": [
+    "N8N-triage"
+  ],
+  "provenance": "SOURCE_ADAPTATION",
+  "scope": "Human approval gate on a proposed customer reply",
+  "purpose": "Human approval gate on a proposed customer reply",
+  "trigger": "A support request with a proposed reply",
+  "inputs": {
+    "in_scope": "Optional field (may be missing), named in local snapshot contract",
+    "proposed_reply": "Optional field (may be missing), named in local snapshot contract",
+    "approval_decision": "Optional field (may be missing), named in local snapshot contract"
+  },
+  "required_fields": [
+    "in_scope",
+    "proposed_reply",
+    "approval_decision"
+  ],
+  "roles": [
+    "customer",
+    "human support"
+  ],
+  "preconditions": [
+    "Single ticket snapshot; declared input fields may be absent; counters/flags trusted"
+  ],
+  "ordered_activities": [
+    "Reject out-of-scope input",
+    "Create ticket and draft reply",
+    "Request human approval",
+    "Send only approved reply then route to Resolved by AI",
+    "Route rejection to Manual Review"
+  ],
+  "decision_conditions": [
+    "in_scope equals true",
+    "approval equals approved"
+  ],
+  "actions": [
+    "Reject out-of-scope input",
+    "Create ticket and draft reply",
+    "Request human approval",
+    "Send only approved reply then route to Resolved by AI",
+    "Route rejection to Manual Review"
+  ],
+  "exceptions_and_escalation": "See conditional activities; no external side effects",
+  "expected_outputs": [
+    "Local ticket state and operation trace"
+  ],
+  "forbidden_actions": [
+    {
+      "policy_id": "no_refund",
+      "kind": "forbid_operation",
+      "operation": "issue_refund",
+      "provenance": "EXPERIMENTAL_ASSUMPTION",
+      "reason": "Local simulator has no authority to transfer money; vendor example mentions a refund notification only."
+    },
+    {
+      "policy_id": "approval_gate",
+      "kind": "requires_state",
+      "operation": "send_reply",
+      "field": "approval",
+      "equals": "approved",
+      "source_ids": [
+        "N8N-triage"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "postconditions": [
+    "Independent case assertions hold on supported fixtures"
+  ],
+  "source_backed_requirements": [
+    {
+      "requirement_id": "A1",
+      "description": "Only valid-scope requests proceed to approval; approved reply is sent before resolution and rejection goes to Manual Review",
+      "source_ids": [
+        "N8N-triage"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "create_ticket",
+        "draft_reply",
+        "request_approval",
+        "send_reply",
+        "route"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "simulation_assumptions": [
+    "Human decision is supplied in approval_decision; request_approval consumes it once, with no real wait.",
+    "AI drafting is represented by copying proposed_reply. It is not measured LLM drafting.",
+    "Only approved/rejected decisions are supported; missing decision fails explicitly."
+  ],
+  "limitations": [
+    "Full n8n graph unavailable; this is a derived approximation.",
+    "No actual email, Trello or guardrail classification."
+  ]
+}

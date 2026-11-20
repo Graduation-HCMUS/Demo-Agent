@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "reference-intake",
+  "name": "Source-derived intake",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "validate",
+      "type": "custom",
+      "config": {
+        "operation": "validate_fields",
+        "args": {
+          "fields": [
+            "email",
+            "message"
+          ],
+          "formats": {}
+        }
+      }
+    },
+    {
+      "id": "valid",
+      "type": "condition",
+      "config": {
+        "field": "valid",
+        "operator": "eq",
+        "value": true
+      }
+    },
+    {
+      "id": "create",
+      "type": "custom",
+      "config": {
+        "operation": "create_ticket",
+        "args": {}
+      }
+    },
+    {
+      "id": "missing",
+      "type": "custom",
+      "config": {
+        "operation": "request_info",
+        "args": {
+          "fields": {
+            "ref": "missing_fields"
+          },
+          "status": 400
+        }
+      }
+    },
+    {
+      "id": "out",
+      "type": "output",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "in",
+      "target": "validate",
+      "port": "next"
+    },
+    {
+      "source": "validate",
+      "target": "valid",
+      "port": "next"
+    },
+    {
+      "source": "valid",
+      "target": "create",
+      "port": "true"
+    },
+    {
+      "source": "valid",
+      "target": "missing",
+      "port": "false"
+    },
+    {
+      "source": "create",
+      "target": "out",
+      "port": "next"
+    },
+    {
+      "source": "missing",
+      "target": "out",
+      "port": "next"
+    }
+  ]
+}

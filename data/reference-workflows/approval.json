@@ -1,0 +1,167 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "reference-approval",
+  "name": "Source-derived approval",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "scope",
+      "type": "condition",
+      "config": {
+        "field": "in_scope",
+        "operator": "eq",
+        "value": true
+      }
+    },
+    {
+      "id": "reject",
+      "type": "custom",
+      "config": {
+        "operation": "notify",
+        "args": {
+          "template": "out_of_scope"
+        }
+      }
+    },
+    {
+      "id": "create",
+      "type": "custom",
+      "config": {
+        "operation": "create_ticket",
+        "args": {}
+      }
+    },
+    {
+      "id": "draft",
+      "type": "custom",
+      "config": {
+        "operation": "draft_reply",
+        "args": {
+          "text": {
+            "ref": "proposed_reply"
+          }
+        }
+      }
+    },
+    {
+      "id": "ask",
+      "type": "custom",
+      "config": {
+        "operation": "request_approval",
+        "args": {}
+      }
+    },
+    {
+      "id": "decision",
+      "type": "condition",
+      "config": {
+        "field": "approval",
+        "operator": "eq",
+        "value": "approved"
+      }
+    },
+    {
+      "id": "send",
+      "type": "custom",
+      "config": {
+        "operation": "send_reply",
+        "args": {
+          "text": {
+            "ref": "draft"
+          }
+        }
+      }
+    },
+    {
+      "id": "resolved",
+      "type": "custom",
+      "config": {
+        "operation": "route",
+        "args": {
+          "group": "Resolved by AI"
+        }
+      }
+    },
+    {
+      "id": "manual",
+      "type": "custom",
+      "config": {
+        "operation": "route",
+        "args": {
+          "group": "Manual Review"
+        }
+      }
+    },
+    {
+      "id": "out",
+      "type": "output",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "in",
+      "target": "scope",
+      "port": "next"
+    },
+    {
+      "source": "scope",
+      "target": "create",
+      "port": "true"
+    },
+    {
+      "source": "scope",
+      "target": "reject",
+      "port": "false"
+    },
+    {
+      "source": "reject",
+      "target": "out",
+      "port": "next"
+    },
+    {
+      "source": "create",
+      "target": "draft",
+      "port": "next"
+    },
+    {
+      "source": "draft",
+      "target": "ask",
+      "port": "next"
+    },
+    {
+      "source": "ask",
+      "target": "decision",
+      "port": "next"
+    },
+    {
+      "source": "decision",
+      "target": "send",
+      "port": "true"
+    },
+    {
+      "source": "decision",
+      "target": "manual",
+      "port": "false"
+    },
+    {
+      "source": "send",
+      "target": "resolved",
+      "port": "next"
+    },
+    {
+      "source": "resolved",
+      "target": "out",
+      "port": "next"
+    },
+    {
+      "source": "manual",
+      "target": "out",
+      "port": "next"
+    }
+  ]
+}

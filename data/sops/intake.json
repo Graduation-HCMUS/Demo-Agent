@@ -1,0 +1,91 @@
+{
+  "sop_id": "intake",
+  "source_ids": [
+    "N8N-routing"
+  ],
+  "provenance": "SOURCE_ADAPTATION",
+  "scope": "Required-field intake slice of a published support webhook",
+  "purpose": "Required-field intake slice of a published support webhook",
+  "trigger": "A new ticket snapshot",
+  "inputs": {
+    "email": "Optional field (may be missing), named in local snapshot contract",
+    "message": "Optional field (may be missing), named in local snapshot contract"
+  },
+  "required_fields": [
+    "email",
+    "message"
+  ],
+  "roles": [
+    "customer",
+    "human support"
+  ],
+  "preconditions": [
+    "Single ticket snapshot; declared input fields may be absent; counters/flags trusted"
+  ],
+  "ordered_activities": [
+    "Validate email and message presence",
+    "If invalid, request missing information and return status 400",
+    "Otherwise create a local ticket"
+  ],
+  "decision_conditions": [
+    "valid fields"
+  ],
+  "actions": [
+    "Validate email and message presence",
+    "If invalid, request missing information and return status 400",
+    "Otherwise create a local ticket"
+  ],
+  "exceptions_and_escalation": "See conditional activities; no external side effects",
+  "expected_outputs": [
+    "Local ticket state and operation trace"
+  ],
+  "forbidden_actions": [
+    {
+      "policy_id": "no_refund",
+      "kind": "forbid_operation",
+      "operation": "issue_refund",
+      "provenance": "EXPERIMENTAL_ASSUMPTION",
+      "reason": "Local simulator has no authority to transfer money; vendor example mentions a refund notification only."
+    },
+    {
+      "policy_id": "valid_before_create",
+      "kind": "requires_state",
+      "operation": "create_ticket",
+      "field": "valid",
+      "equals": true,
+      "source_ids": [
+        "N8N-routing"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "postconditions": [
+    "Independent case assertions hold on supported fixtures"
+  ],
+  "source_backed_requirements": [
+    {
+      "requirement_id": "I1",
+      "description": "Reject incomplete intake and create only complete tickets",
+      "source_ids": [
+        "N8N-routing"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "validate_fields",
+        "create_ticket",
+        "request_info"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "simulation_assumptions": [
+    "email and message are the chosen required fields; the description does not enumerate them.",
+    "Request-info event accompanies rejection for teaching missing-information handling.",
+    "Created ticket is an in-memory boolean, not a Google Sheets record."
+  ],
+  "limitations": [
+    "No deduplication, real HTTP response or live integration."
+  ]
+}

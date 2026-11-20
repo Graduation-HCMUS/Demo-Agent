@@ -1,0 +1,276 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "reference-damage",
+  "name": "Source-derived damage",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "input",
+      "config": {}
+    },
+    {
+      "id": "ack",
+      "type": "custom",
+      "config": {
+        "operation": "notify",
+        "args": {
+          "template": "damage_empathy"
+        }
+      }
+    },
+    {
+      "id": "validate_order",
+      "type": "custom",
+      "config": {
+        "operation": "validate_fields",
+        "args": {
+          "fields": [
+            "order_number"
+          ],
+          "formats": {
+            "order_number": "order_number"
+          }
+        }
+      }
+    },
+    {
+      "id": "order_valid",
+      "type": "condition",
+      "config": {
+        "field": "valid",
+        "operator": "eq",
+        "value": true
+      }
+    },
+    {
+      "id": "order_twice",
+      "type": "condition",
+      "config": {
+        "field": "order_attempts",
+        "operator": "gte",
+        "value": 2
+      }
+    },
+    {
+      "id": "ask_order",
+      "type": "custom",
+      "config": {
+        "operation": "request_info",
+        "args": {
+          "fields": [
+            "order_number"
+          ],
+          "status": 200
+        }
+      }
+    },
+    {
+      "id": "human",
+      "type": "custom",
+      "config": {
+        "operation": "escalate",
+        "args": {
+          "group": "human_support"
+        }
+      }
+    },
+    {
+      "id": "save_order",
+      "type": "custom",
+      "config": {
+        "operation": "save_order",
+        "args": {
+          "value": {
+            "ref": "order_number"
+          }
+        }
+      }
+    },
+    {
+      "id": "details",
+      "type": "custom",
+      "config": {
+        "operation": "validate_fields",
+        "args": {
+          "fields": [
+            "product",
+            "damage_description"
+          ],
+          "formats": {}
+        }
+      }
+    },
+    {
+      "id": "details_valid",
+      "type": "condition",
+      "config": {
+        "field": "valid",
+        "operator": "eq",
+        "value": true
+      }
+    },
+    {
+      "id": "ask_details",
+      "type": "custom",
+      "config": {
+        "operation": "request_info",
+        "args": {
+          "fields": {
+            "ref": "missing_fields"
+          },
+          "status": 200
+        }
+      }
+    },
+    {
+      "id": "photo",
+      "type": "custom",
+      "config": {
+        "operation": "notify",
+        "args": {
+          "template": "optional_photo_request"
+        }
+      }
+    },
+    {
+      "id": "create",
+      "type": "custom",
+      "config": {
+        "operation": "create_ticket",
+        "args": {}
+      }
+    },
+    {
+      "id": "next",
+      "type": "custom",
+      "config": {
+        "operation": "notify",
+        "args": {
+          "template": "next_steps_3_to_5_business_days"
+        }
+      }
+    },
+    {
+      "id": "handoff",
+      "type": "custom",
+      "config": {
+        "operation": "escalate",
+        "args": {
+          "group": "human_support"
+        }
+      }
+    },
+    {
+      "id": "thanks",
+      "type": "custom",
+      "config": {
+        "operation": "notify",
+        "args": {
+          "template": "thanks"
+        }
+      }
+    },
+    {
+      "id": "out",
+      "type": "output",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "in",
+      "target": "ack",
+      "port": "next"
+    },
+    {
+      "source": "ack",
+      "target": "validate_order",
+      "port": "next"
+    },
+    {
+      "source": "validate_order",
+      "target": "order_valid",
+      "port": "next"
+    },
+    {
+      "source": "order_valid",
+      "target": "save_order",
+      "port": "true"
+    },
+    {
+      "source": "order_valid",
+      "target": "order_twice",
+      "port": "false"
+    },
+    {
+      "source": "order_twice",
+      "target": "human",
+      "port": "true"
+    },
+    {
+      "source": "order_twice",
+      "target": "ask_order",
+      "port": "false"
+    },
+    {
+      "source": "human",
+      "target": "out",
+      "port": "next"
+    },
+    {
+      "source": "ask_order",
+      "target": "out",
+      "port": "next"
+    },
+    {
+      "source": "save_order",
+      "target": "details",
+      "port": "next"
+    },
+    {
+      "source": "details",
+      "target": "details_valid",
+      "port": "next"
+    },
+    {
+      "source": "details_valid",
+      "target": "photo",
+      "port": "true"
+    },
+    {
+      "source": "details_valid",
+      "target": "ask_details",
+      "port": "false"
+    },
+    {
+      "source": "ask_details",
+      "target": "out",
+      "port": "next"
+    },
+    {
+      "source": "photo",
+      "target": "create",
+      "port": "next"
+    },
+    {
+      "source": "create",
+      "target": "next",
+      "port": "next"
+    },
+    {
+      "source": "next",
+      "target": "handoff",
+      "port": "next"
+    },
+    {
+      "source": "handoff",
+      "target": "thanks",
+      "port": "next"
+    },
+    {
+      "source": "thanks",
+      "target": "out",
+      "port": "next"
+    }
+  ]
+}

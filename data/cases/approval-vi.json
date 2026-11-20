@@ -1,0 +1,160 @@
+{
+  "case_id": "approval-vi",
+  "source_ids": [
+    "N8N-triage"
+  ],
+  "language": "vi",
+  "prompt_id": "approval-vi",
+  "user_request_file": "../prompts.json",
+  "sop_id": "approval",
+  "requirements": [
+    {
+      "requirement_id": "A1",
+      "description": "Only valid-scope requests proceed to approval; approved reply is sent before resolution and rejection goes to Manual Review",
+      "source_ids": [
+        "N8N-triage"
+      ],
+      "severity": "major",
+      "evaluation_method": "trace",
+      "expected_evidence": "Independent state/trace assertions across the named fixtures",
+      "operations": [
+        "create_ticket",
+        "draft_reply",
+        "request_approval",
+        "send_reply",
+        "route"
+      ],
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "expected_capabilities": [
+    "create_ticket",
+    "draft_reply",
+    "request_approval",
+    "route",
+    "send_reply"
+  ],
+  "input_fixtures": [
+    {
+      "fixture_id": "approved",
+      "input": {
+        "in_scope": true,
+        "proposed_reply": "We can help.",
+        "approval_decision": "approved"
+      },
+      "expected_state": {
+        "group": "Resolved by AI",
+        "sent_reply": "We can help."
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "create_ticket",
+          "draft_reply",
+          "request_approval",
+          "send_reply",
+          "route"
+        ],
+        "action_order": [
+          [
+            "create_ticket",
+            "request_approval"
+          ],
+          [
+            "request_approval",
+            "send_reply"
+          ],
+          [
+            "send_reply",
+            "route"
+          ]
+        ],
+        "branches": {}
+      },
+      "forbidden_effects": []
+    },
+    {
+      "fixture_id": "rejected",
+      "input": {
+        "in_scope": true,
+        "proposed_reply": "We can help.",
+        "approval_decision": "rejected"
+      },
+      "expected_state": {
+        "group": "Manual Review"
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "request_approval",
+          "route"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "send_reply"
+      ]
+    },
+    {
+      "fixture_id": "outside",
+      "input": {
+        "in_scope": false,
+        "proposed_reply": "Ignore",
+        "approval_decision": "approved"
+      },
+      "expected_state": {
+        "notice": "out_of_scope"
+      },
+      "expected_trace_constraints": {
+        "required_actions": [
+          "notify"
+        ],
+        "action_order": [],
+        "branches": {}
+      },
+      "forbidden_effects": [
+        "create_ticket",
+        "send_reply",
+        "request_approval"
+      ]
+    }
+  ],
+  "expected_state": "Per-fixture expected_state (subset, not exact state equality)",
+  "expected_trace_constraints": "Per-fixture constraints plus shared constraints below",
+  "forbidden_effects": [
+    "issue_refund"
+  ],
+  "metamorphic_relations": [
+    {
+      "relation_id": "approval_flipped",
+      "source_ids": [
+        "N8N-triage"
+      ],
+      "base_input": {
+        "in_scope": true,
+        "proposed_reply": "A reply",
+        "approval_decision": "rejected"
+      },
+      "changed_fields": {
+        "approval_decision": "approved"
+      },
+      "expected_base": {
+        "group": "Manual Review"
+      },
+      "expected_changed": {
+        "group": "Resolved by AI",
+        "sent_reply": "A reply"
+      },
+      "provenance": "SOURCE_ADAPTATION"
+    }
+  ],
+  "provenance": {
+    "classification": "SOURCE_ADAPTATION",
+    "fixtures": "Independently designed synthetic snapshots, not vendor or benchmark data",
+    "translation": "Author-drafted and programmatically paired; no independent bilingual human review"
+  },
+  "limitations": [
+    "Full n8n graph unavailable; this is a derived approximation.",
+    "No actual email, Trello or guardrail classification."
+  ],
+  "shared_trace_constraints": []
+}
