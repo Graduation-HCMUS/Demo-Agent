@@ -13,7 +13,7 @@ from .report import write_report
 
 
 def model_options(p):
-    p.add_argument('--model');p.add_argument('--timeout',type=float);p.add_argument('--num-predict',type=int)
+    p.add_argument('--provider',choices=['ollama','openai']);p.add_argument('--base-url');p.add_argument('--model');p.add_argument('--timeout',type=float);p.add_argument('--num-predict',type=int)
     p.add_argument('--num-ctx',type=int);p.add_argument('--retries',type=int,default=0);p.add_argument('--no-cache',action='store_true')
 
 
@@ -24,7 +24,7 @@ def optional_methods(p):
 
 
 def config_for(args,model=None):
-    return settings(model or getattr(args,'model',None),timeout=getattr(args,'timeout',None),num_predict=getattr(args,'num_predict',None),num_ctx=getattr(args,'num_ctx',None),
+    return settings(model or getattr(args,'model',None),provider=getattr(args,'provider',None),base_url=getattr(args,'base_url',None),timeout=getattr(args,'timeout',None),num_predict=getattr(args,'num_predict',None),num_ctx=getattr(args,'num_ctx',None),
                     retries=getattr(args,'retries',0),cache=not getattr(args,'no_cache',False))
 
 

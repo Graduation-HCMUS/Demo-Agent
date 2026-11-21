@@ -14,21 +14,43 @@ from .validators import validate
 PROMPT_VERSION='genie-zero-shot-v2'
 
 
+def load_env_file(path=ROOT/'.env'):
+    """Load simple KEY=VALUE settings without overriding the process environment."""
+    try:
+        lines=path.read_text(encoding='utf-8').splitlines()
+    except FileNotFoundError:
+        return
+    for line in lines:
+        line=line.strip()
+        if not line or line.startswith('#'): continue
+        if line.startswith('export '): line=line[7:].lstrip()
+        key,sep,value=line.partition('=')
+        if not sep or not key.strip().replace('_','').isalnum(): continue
+        value=value.strip()
+        if len(value)>=2 and value[0]==value[-1] and value[0] in ('"',"'"):
+            value=value[1:-1]
+        os.environ.setdefault(key.strip(),value)
+
+
 def settings(model=None, **overrides):
-    result=dict(model=model or os.getenv('GENIE_MODEL','qwen3.5:9b'),host=os.getenv('OLLAMA_HOST','http://127.0.0.1:11434'),
+    load_env_file()
+    result=dict(provider=os.getenv('GENIE_PROVIDER','ollama').lower(),model=model or os.getenv('GENIE_MODEL','qwen3.5:9b'),host=os.getenv('OLLAMA_HOST','http://127.0.0.1:11434'),
+                base_url=os.getenv('GENIE_BASE_URL','http://127.0.0.1:20128/v1'),api_key=os.getenv('GENIE_API_KEY',''),
                 timeout=float(os.getenv('GENIE_TIMEOUT','120')),num_predict=int(os.getenv('GENIE_NUM_PREDICT','4096')),num_ctx=int(os.getenv('GENIE_NUM_CTX','16384')),temperature=0,seed=17,retries=0,cache=True)
     result.update({k:v for k,v in overrides.items() if v is not None})
     if result['retries']<0 or result['num_ctx']<1024 or result['num_predict']<1 or result['timeout']<=0:
         raise ValueError('Invalid retry, token-budget or timeout configuration')
-    parsed=urlparse(result['host'])
-    if parsed.scheme!='http' or parsed.hostname not in ('localhost','127.0.0.1','::1'):
-        raise ValueError('Only a local HTTP Ollama host is supported; no paid/cloud inference')
+    if result['provider'] not in ('ollama','openai'): raise ValueError("provider must be 'ollama' or 'openai'")
+    target=result['host'] if result['provider']=='ollama' else result['base_url'];parsed=urlparse(target)
+    if parsed.scheme not in ('http','https') or not parsed.hostname: raise ValueError('Invalid model API URL')
+    if result['provider']=='ollama' and (parsed.scheme!='http' or parsed.hostname not in ('localhost','127.0.0.1','::1')):
+        raise ValueError('Ollama host must use local HTTP')
     return result
 
 
-def http_json(host,path,payload=None,timeout=5):
+def http_json(host,path,payload=None,timeout=5,headers=None):
     request=urllib.request.Request(host.rstrip('/')+path,data=None if payload is None else json.dumps(payload).encode(),
-                                   headers={'Content-Type':'application/json'})
+                                   headers={'Content-Type':'application/json',**(headers or {})})
     with urllib.request.urlopen(request,timeout=timeout) as response:
         return json.load(response,parse_constant=reject_constant)
 
@@ -36,6 +58,12 @@ def http_json(host,path,payload=None,timeout=5):
 def doctor(config=None,transport=http_json):
     config=config or settings();start=time.perf_counter()
     try:
+        if config['provider']=='openai':
+            headers={'Authorization':'Bearer '+config['api_key']} if config.get('api_key') else {}
+            data=transport(config['base_url'],'/models',timeout=min(config['timeout'],10),headers=headers)
+            models=data.get('data',[]);installed=next((m for m in models if m.get('id')==config['model']),None)
+            return dict(status='READY' if installed else 'MODEL_MISSING',server_available=True,requested_model=config['model'],installed_models=models,
+                        selected_model=installed,elapsed_ms=(time.perf_counter()-start)*1000,error=None if installed else 'Requested model is not exposed by the API.')
         data=transport(config['host'],'/api/tags',timeout=min(config['timeout'],10))
         models=[dict(name=m.get('name',m.get('model')),digest=m.get('digest'),size=m.get('size'),details=m.get('details')) for m in data.get('models',[])]
         installed=next((m for m in models if m['name']==config['model']),None)
@@ -70,7 +98,7 @@ def build_prompt(case,sop):
 
 def structured_call(prompt,schema,config,kind,transport=http_json,cache_dir=None):
     started=time.perf_counter();probe=doctor(config,transport)
-    base=dict(kind=kind,model=config['model'],model_digest=(probe.get('selected_model') or {}).get('digest'),configuration={k:v for k,v in config.items() if k!='cache'},
+    base=dict(kind=kind,model=config['model'],model_digest=(probe.get('selected_model') or {}).get('digest'),configuration={k:v for k,v in config.items() if k not in ('cache','api_key')},
               prompt_version=PROMPT_VERSION,prompt_hash=digest(prompt),schema_hash=digest(schema),cached=False,prompt_tokens=None,completion_tokens=None,latency_ms=0,
               raw_response=None,parsed=None,validation_errors=[],attempts=[],status=probe['status'],doctor=probe)
     if probe['status']!='READY':
@@ -87,18 +115,31 @@ def structured_call(prompt,schema,config,kind,transport=http_json,cache_dir=None
     request_file=cache_root/'requests'/f'{request_id}.json'
     save(request_file,dict(request_id=request_id,status='STARTED',model=config['model'],configuration=base['configuration'],prompt_hash=base['prompt_hash'],prompt=prompt,started_at=base['started_at']))
     base['request_record']=str(request_file)
-    payload=dict(model=config['model'],messages=[dict(role='user',content=prompt)],format=schema,stream=False,think=False,
-                 options=dict(temperature=config['temperature'],seed=config['seed'],num_predict=config['num_predict'],num_ctx=config['num_ctx']))
+    if config['provider']=='openai':
+        payload=dict(model=config['model'],messages=[dict(role='user',content=prompt)],response_format={'type':'json_object'},stream=False,
+                     temperature=config['temperature'],max_tokens=config['num_predict'])
+        headers={'Authorization':'Bearer '+config['api_key']} if config.get('api_key') else {};endpoint='/chat/completions'
+    else:
+        payload=dict(model=config['model'],messages=[dict(role='user',content=prompt)],format=schema,stream=False,think=False,
+                     options=dict(temperature=config['temperature'],seed=config['seed'],num_predict=config['num_predict'],num_ctx=config['num_ctx']))
+        headers={};endpoint='/api/chat'
     # Each attempt is durably saved before retry; no repair demonstrations introduced.
     for index in range(config['retries']+1):
         attempt=dict(attempt_index=index,raw_response=None,parsed=None,validation_errors=[],prompt_tokens=None,completion_tokens=None,status='ERROR')
         call_start=time.perf_counter()
         try:
-            response=transport(config['host'],'/api/chat',payload,timeout=config['timeout'])
+            if config['provider']=='openai':
+                response=transport(config['base_url'],endpoint,payload,timeout=config['timeout'],headers=headers)
+            else:
+                response=transport(config['host'],endpoint,payload,timeout=config['timeout'])
             if response.get('error'):raise ValueError(response['error'])
-            attempt['raw_response']=response.get('message',{}).get('content','')  # Never retain message.thinking.
-            attempt['prompt_tokens']=response.get('prompt_eval_count');attempt['completion_tokens']=response.get('eval_count')
-            attempt['server_total_duration_ns']=response.get('total_duration');attempt['done_reason']=response.get('done_reason')
+            if config['provider']=='openai':
+                choices=response.get('choices') or [];attempt['raw_response']=(choices[0].get('message') or {}).get('content','') if choices else ''
+                usage=response.get('usage') or {};attempt['prompt_tokens']=usage.get('prompt_tokens');attempt['completion_tokens']=usage.get('completion_tokens')
+            else:
+                attempt['raw_response']=response.get('message',{}).get('content','')  # Never retain message.thinking.
+                attempt['prompt_tokens']=response.get('prompt_eval_count');attempt['completion_tokens']=response.get('eval_count')
+                attempt['server_total_duration_ns']=response.get('total_duration');attempt['done_reason']=response.get('done_reason')
             attempt['parsed']=parse_json(attempt['raw_response'])
             attempt['validation_errors']=schema_errors(attempt['parsed'],schema)
             attempt['status']='INVALID' if attempt['validation_errors'] else 'OK'

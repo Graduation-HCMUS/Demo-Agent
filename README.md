@@ -6,7 +6,7 @@ Workspace Python giúp so sánh cách sinh workflow từ yêu cầu và cách ki
 
 ## Yêu cầu môi trường
 
-Python 3.11+; phần runtime chỉ dùng standard library, không cần cài dependency bằng pip để chạy từ source. Chạy lệnh tại root repository. Ollama và model đã cài chỉ cần cho bước inference tùy chọn; chương trình không tự tải model. Xem [pyproject.toml](pyproject.toml) và [.env.example](.env.example). Chương trình đọc biến môi trường, không tự nạp file dotenv.
+Python 3.11+; phần runtime chỉ dùng standard library, không cần cài dependency bằng pip để chạy từ source. Chạy lệnh tại root repository. Ollama và model đã cài chỉ cần cho bước inference tùy chọn; chương trình không tự tải model. Xem [pyproject.toml](pyproject.toml) và [.env.example](.env.example). Chương trình đọc `.env` ở repo root; biến môi trường đã có trong shell được ưu tiên hơn file này.
 
 ## Cài đặt và chạy nhanh
 
@@ -54,6 +54,10 @@ python -m genie_eval.cli generate --case intake-en --model qwen3:4b \
 Đây là cấu hình tương ứng lần đo qwen3:4b/v2. Mặc định CLI khác: qwen3.5:9b, context 16384, completion cap 4096, timeout 120 giây; một candidate, temperature 0, seed 17, retries 0, không Judge. Model có thể chọn qua `--model` hoặc `GENIE_MODEL`. Không hứa cấu hình nào chạy nhanh hay tạo workflow đúng trên mọi máy.
 
 `generate --strategy hierarchical` chọn phân cấp; `--candidates 2`/`3` chọn nhiều phương án; `--planner-model`/`--detail-model` chọn model từng vai trò. `evaluate --judge` chỉ hỏi mục chưa rõ; `--judge-all` hỏi mọi mục; `--judge-models` chọn Judge. `benchmark --all-methods` là cấu hình nhiều lời gọi tốn thêm tài nguyên. Xem [giao thức thí nghiệm](docs/05-experiments.md) và `python -m genie_eval.cli benchmark --help` trước khi chạy; không cần các bước đó để đọc tài liệu.
+
+### 9Router / API tương thích OpenAI
+
+Có thể trỏ client tới 9Router local (hoặc API tương thích OpenAI). Sao chép `.env.example` thành `.env`, rồi đặt `GENIE_PROVIDER=openai`, `GENIE_BASE_URL=http://127.0.0.1:20128/v1` và `GENIE_MODEL` bằng ID model trong dashboard (ví dụ `oc/<model-id>`). Nếu endpoint cần API key, đặt `GENIE_API_KEY` trong `.env`; file `.env` đã được Git bỏ qua. Khởi động 9Router, sau đó chạy `python -m genie_eval.cli doctor` và `python -m genie_eval.cli generate --case intake-en`. Có thể truyền `--provider`, `--base-url`, `--model` trực tiếp cho `doctor`/`generate` để ghi đè giá trị env. Prompt, schema validation, cache và evaluator giữ nguyên; chỉ adapter HTTP thay đổi. API cloud gửi nội dung prompt và dữ liệu workflow tới provider đã chọn. Model miễn phí và quota phụ thuộc provider, có thể thay đổi.
 
 ## Đọc kết quả đã lưu
 
